@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Sparkles, Check, Send, AlertCircle, RefreshCw } from "lucide-react";
 import { EventConceptId, RsvpResponse } from "../types";
+import { initialEventData } from "../data";
 
 interface RsvpFormProps {
   concept: EventConceptId;
@@ -73,7 +74,7 @@ export default function RsvpForm({ concept, onSuccess }: RsvpFormProps) {
     }
   };
 
-  // Submit RSVP Form to backend
+  // Submit RSVP Form to backend with WhatsApp fallback
   const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitError("");
@@ -86,6 +87,8 @@ export default function RsvpForm({ concept, onSuccess }: RsvpFormProps) {
     }
 
     setIsSubmitting(true);
+    
+    // 1. Try sending to the Express Backend
     try {
       const response = await fetch("/api/rsvp", {
         method: "POST",
@@ -100,17 +103,58 @@ export default function RsvpForm({ concept, onSuccess }: RsvpFormProps) {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Произошла ошибка при отправке формы");
+      if (response.ok) {
+        const savedEntry = await response.json();
+        setIsDone(true);
+        onSuccess(savedEntry);
+        
+        setTimeout(() => {
+          setName("");
+          setStatus("yes");
+          setGuestsCount(1);
+          setFood("meat");
+          setDrinks([]);
+          setWishes("");
+          setIsDone(false);
+        }, 5000);
+        setIsSubmitting(false);
+        return;
       }
+    } catch (err) {
+      console.warn("Backend RSVP endpoint failed or unavailable. Falling back to WhatsApp redirection.", err);
+    }
 
-      const savedEntry = await response.json();
-      setIsDone(true);
-      onSuccess(savedEntry);
+    // 2. Fallback to WhatsApp redirection (Perfect for static hosting like GitHub Pages)
+    try {
+      const formattedStatus = status === "yes" ? "Да, с радостью приду!" : status === "maybe" ? "Будет видно" : "Не смогу";
+      const formattedFood = food === "meat" ? "Мясо" : food === "fish" ? "Рыба" : "Вегетарианское";
+      const formattedDrinks = drinks.length > 0 ? drinks.join(", ") : "Без алкоголя";
       
-      // Keep state clean or triggers confetti
+      const message = `Привет! Отправляю ответ RSVP на приглашение:
+Имя: ${name}
+Присутствие: ${formattedStatus}
+Количество гостей: ${status !== "no" ? guestsCount : 0}
+Выбор блюда: ${status !== "no" ? formattedFood : "-"}
+Напитки: ${status !== "no" ? formattedDrinks : "-"}
+Пожелания: ${wishes || "Нет"}`;
+
+      const phone = initialEventData.contacts.organizerPhone.replace(/\D/g, "");
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
+      
+      window.open(whatsappUrl, "_blank");
+      
+      setIsDone(true);
+      onSuccess({
+        id: Math.random().toString(36).substring(2, 9),
+        name,
+        status,
+        guestsCount,
+        food,
+        drinks,
+        wishes,
+      });
+
       setTimeout(() => {
-        // Reset local form fields
         setName("");
         setStatus("yes");
         setGuestsCount(1);
@@ -119,9 +163,8 @@ export default function RsvpForm({ concept, onSuccess }: RsvpFormProps) {
         setWishes("");
         setIsDone(false);
       }, 5000);
-
     } catch (err: any) {
-      setSubmitError(err.message || "Не удалось отправить подтверждение. Пожалуйста, попробуйте еще раз.");
+      setSubmitError("Не удалось отправить RSVP. Пожалуйста, свяжитесь с организатором напрямую.");
     } finally {
       setIsSubmitting(false);
     }

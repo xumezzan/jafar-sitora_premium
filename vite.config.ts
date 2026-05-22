@@ -5,6 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    base: '/jafar-sitora_premium/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
