@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Montserrat", system-ui, sans-serif;
+  --font-pinyon: "Pinyon Script", cursive;
+  --font-tenor: "Tenor Sans", sans-serif;
+  --font-syne: "Syne", sans-serif;
+  --font-mono: "Fira Code", monospace;
+  --font-cinzel: "Cinzel", Georgia, serif;
+  
+  /* Soundbars keyframes for Audio Player */
+  @keyframes bar-1 {
+    0%, 100% { transform: scaleY(0.3); }
+    50% { transform: scaleY(1.0); }
+  }
+  @keyframes bar-2 {
+    0%, 100% { transform: scaleY(1.0); }
+    50% { transform: scaleY(0.4); }
+  }
+  @keyframes bar-3 {
+    0%, 100% { transform: scaleY(0.5); }
+    50% { transform: scaleY(1.2); }
+  }
+  
+  --animate-bar-1: bar-1 0.8s ease-in-out infinite;
+  --animate-bar-2: bar-2 0.7s ease-in-out infinite;
+  --animate-bar-3: bar-3 0.9s ease-in-out infinite;
+  --animate-spin-slow: spin 12s linear infinite;
+}

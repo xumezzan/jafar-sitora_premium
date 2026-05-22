@@ -1,0 +1,6 @@
+{
+  "name": "Wedding Invitation",
+  "description": "Premium interactive wedding invitation with Botanical Minimal, Wild Passion, and Alpine Tech styles",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
