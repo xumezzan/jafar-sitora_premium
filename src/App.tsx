@@ -1,22 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import { 
-  Tent, 
-  Mountain, 
-  Flame, 
-  Sparkles, 
-  Music, 
-  MapPin, 
-  Compass, 
-  Clock, 
-  ChevronDown, 
-  MessageSquare, 
-  Share2, 
+  Tent,
+  Mountain,
+  Flame,
+  Sparkles,
+  Music,
+  MapPin,
+  Compass,
+  Clock,
+  ChevronDown,
+  MessageSquare,
+  Share2,
   Navigation,
   Calendar,
   Layers,
   Heart,
   Users,
-  Utensils
+  Utensils,
+  Camera
 } from "lucide-react";
 import { EventConceptId, EventData, RsvpResponse } from "./types";
 import { initialEventData } from "./data";
@@ -31,7 +32,6 @@ export default function App() {
   const [rsvpEntries, setRsvpEntries] = useState<RsvpResponse[]>([]);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isCopied, setIsCopied] = useState(false);
-  const [activeDressColor, setActiveDressColor] = useState<string | null>(null);
   const [showFloatNav, setShowFloatNav] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
@@ -351,15 +351,6 @@ export default function App() {
               className="w-full max-h-[85vh] object-cover filter saturate-[0.85] contrast-[1.05] transition-transform duration-[4000ms] hover:scale-105"
             />
           </div>
-
-          <div className="max-w-xl mx-auto mt-8 space-y-4">
-            <h2 className={`text-2xl md:text-3xl ${css.fontTitle}`}>
-              У вечности в объятиях...
-            </h2>
-            <p className="text-sm leading-relaxed opacity-85 text-stone-500">
-              Мы верим, что настоящая любовь — это прекрасный совместный путь, полный взаимного доверия, искренней заботы и душевной теплоты. И мы безмерно счастливы, что нашли друг друга, чтобы сделать этот важный шаг вместе.
-            </p>
-          </div>
         </div>
       </section>
 
@@ -465,6 +456,7 @@ export default function App() {
                     {item.icon === "heart" && <Heart className="w-4 h-4" />}
                     {item.icon === "utensils" && <Utensils className="w-4 h-4" />}
                     {item.icon === "music" && <Music className="w-4 h-4" />}
+                    {item.icon === "camera" && <Camera className="w-4 h-4" />}
                     {item.icon === "tent" && <Tent className="w-4 h-4" />}
                     {item.icon === "peak" && <Mountain className="w-4 h-4" />}
                     {item.icon === "bonfire" && <Flame className="w-4 h-4" />}
@@ -473,23 +465,29 @@ export default function App() {
 
                   {/* Card Content info */}
                   <div className={`p-6 border transition-all shadow-sm ${
-                    concept === "botanical" ? "bg-white border-stone-200/70 rounded-none text-[#1A2E22]" : 
-                    concept === "passion" ? "bg-neutral-50/95 border-none rounded-3xl text-[#660000]" : 
+                    item.icon === "camera" ? (
+                      concept === "cosmic"
+                        ? "bg-indigo-950/60 border-indigo-400/40 rounded-lg text-indigo-100 ring-1 ring-indigo-400/30"
+                        : "bg-white border-stone-400/50 rounded-xl ring-1 ring-stone-300 text-[#1A2E22]"
+                    ) :
+                    concept === "botanical" ? "bg-white border-stone-200/70 rounded-none text-[#1A2E22]" :
+                    concept === "passion" ? "bg-neutral-50/95 border-none rounded-3xl text-[#660000]" :
                     concept === "cozy" ? "bg-white border-[#B45309]/10 rounded-xl text-[#451A03]" :
                     concept === "cosmic" ? "bg-[#0B0822]/85 border-indigo-500/15 rounded-lg text-indigo-100" :
                     "bg-white border-stone-200 rounded-xl font-mono text-xs text-neutral-800"
                   }`}>
-                    
+
                     {/* Mobile time display fallback */}
                     <div className="md:hidden text-lg font-bold font-mono mb-1 flex items-center gap-1">
                       <Clock className="w-4 h-4 opacity-50" />
                       <span>{item.time}</span>
                     </div>
 
-                    <h4 className="text-[13px] font-bold uppercase tracking-wide">
+                    <h4 className={`text-[13px] font-bold uppercase tracking-wide ${item.icon === "camera" ? "flex items-center gap-2" : ""}`}>
+                      {item.icon === "camera" && <Camera className="w-4 h-4 shrink-0" />}
                       {item.title}
                     </h4>
-                    <p className="text-xs leading-relaxed mt-1.5 opacity-80">
+                    <p className={`text-xs leading-relaxed mt-1.5 opacity-80 ${item.icon === "camera" ? "italic" : ""}`}>
                       {item.description}
                     </p>
                   </div>
@@ -549,56 +547,19 @@ export default function App() {
             </div>
           </div>
 
-          {/* Interactive Topography simulated map board (Built-in SVG high precision) */}
+          {/* Real location image block */}
           <div className="lg:col-span-3">
-            <div className={`aspect-video w-full rounded-2xl md:rounded-3xl border p-4 shadow-xl flex flex-col justify-between overflow-hidden relative ${
-              concept === "botanical" ? "bg-[#FDFDFB] border-stone-200 text-[#1A2E22]" : 
-              concept === "cozy" ? "bg-[#FFFDF9] border-[#B45309]/20 text-[#451A03]" :
-              concept === "cosmic" ? "bg-[#090514] border-indigo-500/20 text-indigo-100" :
-              "bg-[#121212] border-neutral-800 text-white"
-            }`}>
-              
-              {/* Isolated Topographic contour grid background lines */}
-              <div className="absolute inset-0 opacity-15 select-none pointer-events-none p-5">
-                <svg viewBox="0 0 400 200" className="w-full h-full stroke-current fill-none">
-                  <path d="M10,190 Q50,150 150,180 T300,100 T390,50" strokeWidth="1" />
-                  <path d="M10,170 Q60,130 160,165 T310,85 T390,30" strokeWidth="1" />
-                  <path d="M10,150 Q70,110 170,150 T320,70 T390,10" strokeWidth="1" />
-                  <path d="M20,120 Q90,90 190,135 T340,55" strokeWidth="1" />
-                </svg>
+            <div className="aspect-video w-full rounded-2xl md:rounded-3xl overflow-hidden relative shadow-xl border border-stone-200/60">
+              <img
+                src="/venue.jpg"
+                alt={eventData.coordinates.placeName}
+                className="w-full h-full object-cover transition-transform duration-[4000ms] hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent flex flex-col justify-end p-6 text-white">
+                <span className="font-mono text-[9px] uppercase tracking-widest opacity-80">WELCOME TO CELEBRATION</span>
+                <h3 className="text-xl font-bold tracking-tight mt-1">{eventData.coordinates.placeName}</h3>
+                <span className="font-mono text-[9px] uppercase tracking-widest opacity-80 mt-1">DATE: 29.08.2026</span>
               </div>
-
-              {/* Map header coordinates */}
-              <div className="flex justify-between items-start z-10 font-mono text-[9px] uppercase tracking-widest opacity-60">
-                <span>WELCOME TO CELEBRATION</span>
-                <span>COORD: 38.5598° N</span>
-              </div>
-
-              {/* Center pointer locator dot and pulse circles */}
-              <div className="self-center z-10 text-center flex flex-col items-center">
-                <div className="relative mb-3 flex items-center justify-center">
-                  <span className="absolute inline-flex h-10 w-10 rounded-full bg-red-400 opacity-30 animate-ping" />
-                  <span className="relative inline-flex rounded-full h-4.5 w-4.5 bg-red-600 border border-white flex items-center justify-center shadow-lg" />
-                </div>
-                <div className={`text-base font-bold tracking-tight uppercase ${
-                  concept === "botanical" ? "text-stone-850" : 
-                  concept === "cozy" ? "text-[#451A03]" : 
-                  concept === "cosmic" ? "text-indigo-200" : 
-                  "text-white"
-                }`}>
-                  Ресторан «Teia»
-                </div>
-                <div className="text-[10px] opacity-75 font-semibold uppercase mt-0.5">
-                  Счастливое событие
-                </div>
-              </div>
-
-              {/* Map footer markers */}
-              <div className={`flex justify-between items-end z-10 font-mono text-[9px] uppercase tracking-widest ${css.accentText}`}>
-                <span>DATE: 29.08.2026</span>
-                <span>VENUE FOUND</span>
-              </div>
-
             </div>
           </div>
 
@@ -610,45 +571,48 @@ export default function App() {
         <div className="max-w-4xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Swatch color spheres or blobs */}
+            {/* Dress code text block */}
             <div className="lg:col-span-5 space-y-6">
               <span className="text-[10px] tracking-widest uppercase opacity-60 font-mono">ГАРДЕРОБ // DRESS CODE</span>
-              <h2 className={`text-2xl md:text-4xl ${css.fontTitle}`}>Цветовая палитра</h2>
-              <p className="text-xs leading-relaxed opacity-85 text-stone-500">
-                Мы будем рады видеть вас в красивых и гармоничных нарядах благородных пастельных и естественных оттенков нашей праздничной ботанической палитры. Пожалуйста, выбирайте цвета ниже:
+              <h2 className={`text-2xl md:text-4xl ${css.fontTitle}`}>Дресс-код вечера</h2>
+              <p className="text-sm leading-relaxed opacity-85 text-stone-500">
+                {eventData.dressCode.description}
               </p>
 
-              {/* Interactive Color Circle pallette */}
-              <div className="grid grid-cols-5 gap-3">
-                {eventData.dressCode.colors.map((color, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveDressColor(color.name)}
-                    className="flex flex-col items-center gap-1.5 cursor-pointer relative shrink-0"
-                    title={`Выбрать ${color.name}`}
-                  >
-                    <div
-                      className={`w-11 h-11 rounded-full border border-neutral-300 shadow-md transform transition-all duration-300 ${activeDressColor === color.name ? "scale-115 rotate-12 ring-2 ring-neutral-400 ring-offset-2" : "hover:scale-105 active:scale-95"}`}
-                      style={{ backgroundColor: color.hex }}
-                    />
-                    <span className="text-[9px] font-mono tracking-tighter opacity-80 uppercase block truncate max-w-full text-center">
-                      {color.name}
-                    </span>
-                  </button>
-                ))}
+              {/* Dress code formats */}
+              <div className="space-y-3">
+                <div className={`flex items-start gap-4 p-4 rounded-xl border ${
+                  concept === "cosmic" ? "bg-indigo-950/40 border-indigo-500/20 text-indigo-100" :
+                  concept === "cozy" ? "bg-[#FFFDF9]/90 border-[#B45309]/15 text-[#451A03]" :
+                  "bg-white/70 border-neutral-200"
+                }`}>
+                  <span className="text-2xl">🤵</span>
+                  <div>
+                    <p className="font-semibold text-sm tracking-wide uppercase">Black Tie</p>
+                    <p className="text-xs opacity-70 mt-0.5">Смокинг, вечернее длинное платье</p>
+                  </div>
+                </div>
+                <div className={`flex items-start gap-4 p-4 rounded-xl border ${
+                  concept === "cosmic" ? "bg-indigo-950/40 border-indigo-500/20 text-indigo-100" :
+                  concept === "cozy" ? "bg-[#FFFDF9]/90 border-[#B45309]/15 text-[#451A03]" :
+                  "bg-white/70 border-neutral-200"
+                }`}>
+                  <span className="text-2xl">👗</span>
+                  <div>
+                    <p className="font-semibold text-sm tracking-wide uppercase">Cocktail</p>
+                    <p className="text-xs opacity-70 mt-0.5">Костюм, коктейльное или вечернее платье</p>
+                  </div>
+                </div>
               </div>
 
-              {/* Expanded active texture status */}
-              {activeDressColor && (
-                <div id="dresscode-active-color-popup" className={`p-3 border text-[11px] font-medium animate-fade-in flex items-center justify-between ${
-                  concept === "cosmic" ? "bg-[#090514]/90 border-indigo-500/20 rounded-lg text-indigo-100" :
-                  concept === "cozy" ? "bg-[#FFFDF9]/90 border-[#B45309]/15 rounded-xl text-[#451A03]" :
-                  "bg-white/80 border border-neutral-200 rounded-xl"
-                }`}>
-                  <span>Рекомендуемый стиль: <strong>{activeDressColor} костюмные ткани, шелк, лен или хлопок</strong></span>
-                  <button onClick={() => setActiveDressColor(null)} className="text-stone-400 hover:text-stone-700 text-xs font-bold font-mono">×</button>
-                </div>
-              )}
+              {/* Forbidden colors */}
+              <div className={`flex items-center gap-3 p-3 rounded-xl border text-xs ${
+                concept === "cosmic" ? "bg-indigo-950/40 border-indigo-500/20 text-indigo-200" :
+                "bg-stone-50 border-stone-200 text-stone-500"
+              }`}>
+                <span className="text-base">🚫</span>
+                <span>Просим воздержаться от <strong>белого</strong> и <strong>чёрного</strong> цвета</span>
+              </div>
             </div>
 
             {/* Moodboard image gallery */}
