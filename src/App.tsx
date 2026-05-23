@@ -6,12 +6,10 @@ import {
   Sparkles,
   Music,
   MapPin,
-  Compass,
   Clock,
   ChevronDown,
   MessageSquare,
   Share2,
-  Navigation,
   Calendar,
   Layers,
   Heart,
@@ -522,44 +520,31 @@ export default function App() {
               </div>
             </div>
 
-            {/* Google / Apple maps launcher button */}
-            <div className="flex flex-col gap-2">
-              <a
-                id="google-maps-btn"
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(eventData.coordinates.mapQuery)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`py-3 px-5 rounded-xl text-neutral-800 bg-white border border-neutral-300 font-bold text-xs flex items-center justify-center gap-2 shadow-sm hover:bg-neutral-50 cursor-pointer text-center`}
-              >
-                <Navigation className="w-4 h-4 text-emerald-600 animate-pulse" />
-                <span>Открыть в Google Maps 🧭</span>
-              </a>
-              <a
-                id="apple-maps-btn"
-                href={`https://maps.apple.com/?q=${encodeURIComponent(eventData.coordinates.mapQuery)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`py-3 px-5 rounded-xl text-neutral-800 bg-white border border-neutral-300 font-bold text-xs flex items-center justify-center gap-2 shadow-sm hover:bg-neutral-50 cursor-pointer text-center`}
-              >
-                <Compass className="w-4 h-4 text-sky-500" />
-                <span>Открыть в Apple Maps 🍏</span>
-              </a>
-            </div>
+            {/* Map button */}
+            <a
+              id="maps-btn"
+              href={`https://www.google.com/maps/search/?api=1&query=${eventData.coordinates.lat},${eventData.coordinates.lng}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-3 px-5 rounded-xl text-neutral-800 bg-white border border-neutral-300 font-bold text-xs flex items-center justify-center gap-2 shadow-sm hover:bg-neutral-50 cursor-pointer text-center"
+            >
+              <MapPin className="w-4 h-4 text-emerald-600" />
+              <span>{eventData.coordinates.placeName}</span>
+            </a>
           </div>
 
-          {/* Real location image block */}
+          {/* Map embed */}
           <div className="lg:col-span-3">
-            <div className="aspect-video w-full rounded-2xl md:rounded-3xl overflow-hidden relative shadow-xl border border-stone-200/60">
-              <img
-                src="/venue.jpg"
-                alt={eventData.coordinates.placeName}
-                className="w-full h-full object-cover transition-transform duration-[4000ms] hover:scale-105"
+            <div className="aspect-video w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-xl border border-stone-200/60">
+              <iframe
+                title="Venue map"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                src={`https://www.openstreetmap.org/export/embed.html?bbox=${parseFloat(eventData.coordinates.lng)-0.005}%2C${parseFloat(eventData.coordinates.lat)-0.003}%2C${parseFloat(eventData.coordinates.lng)+0.005}%2C${parseFloat(eventData.coordinates.lat)+0.003}&layer=mapnik&marker=${eventData.coordinates.lat}%2C${eventData.coordinates.lng}`}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent flex flex-col justify-end p-6 text-white">
-                <span className="font-mono text-[9px] uppercase tracking-widest opacity-80">WELCOME TO CELEBRATION</span>
-                <h3 className="text-xl font-bold tracking-tight mt-1">{eventData.coordinates.placeName}</h3>
-                <span className="font-mono text-[9px] uppercase tracking-widest opacity-80 mt-1">DATE: 29.08.2026</span>
-              </div>
             </div>
           </div>
 
