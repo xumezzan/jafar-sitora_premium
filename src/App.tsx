@@ -554,10 +554,10 @@ export default function App() {
       {/* 8. DRESS CODE BOARD */}
       <section id="dress-code-section" className={`py-24 relative z-20 ${concept === "cosmic" ? "bg-indigo-950/20" : "bg-stone-100/40"}`}>
         <div className="max-w-4xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
+          <div className="max-w-xl mx-auto">
+
             {/* Dress code text block */}
-            <div className="lg:col-span-5 space-y-6">
+            <div className="space-y-6">
               <span className="text-[10px] tracking-widest uppercase opacity-60 font-mono">ГАРДЕРОБ // DRESS CODE</span>
               <h2 className={`text-2xl md:text-4xl ${css.fontTitle}`}>Дресс-код вечера</h2>
               <p className="text-sm leading-relaxed opacity-85 text-stone-500">
@@ -600,21 +600,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Moodboard image gallery */}
-            <div className="lg:col-span-7">
-              <div className="grid grid-cols-3 gap-3">
-                {eventData.dressCode.moodboardImages.map((img, i) => (
-                  <div key={i} className={`aspect-square relative overflow-hidden shadow-lg border ${concept === "cosmic" ? "border-indigo-500/25 rounded-lg" : concept === "cozy" ? "border-[#B45309]/15 rounded-xl" : "border-white rounded-none"}`}>
-                    <img
-                      src={img}
-                      alt="Dress Code Moodboard"
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover filter saturate-[0.8] hover:scale-110 transition-transform duration-700"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
 
           </div>
         </div>
