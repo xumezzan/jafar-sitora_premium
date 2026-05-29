@@ -377,7 +377,7 @@ export default function App() {
         <div className="relative">
           <div className="relative h-[300px] md:h-[380px] overflow-hidden wavy-bottom">
             <img
-              src="/photo2.jpg"
+              src="/photo3.jpg"
               alt={eventData.coordinates.placeName}
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover"
