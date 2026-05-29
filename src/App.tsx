@@ -677,15 +677,17 @@ export default function App() {
           панель плавно проявляется, а не вставляется резко в DOM. */}
       <div
         id="mobile-float-navigation-dock"
-        className="fixed left-1/2 -translate-x-1/2 z-30 flex items-center justify-around gap-1 p-1.5 rounded-full shadow-xl max-w-[95vw] md:hidden"
+        className="fixed left-0 right-0 z-30 flex items-center justify-around gap-1 p-1.5 rounded-full shadow-xl md:hidden"
         style={{
           bottom: "var(--nav-bottom, 16px)",
+          marginLeft: "auto",
+          marginRight: "auto",
+          width: "fit-content",
+          maxWidth: "95vw",
           background: "rgba(248,245,239,0.98)",
           border: "1px solid var(--color-line)",
           opacity: showFloatNav ? 1 : 0,
-          transform: showFloatNav
-            ? "translateX(-50%) translateY(0)"
-            : "translateX(-50%) translateY(16px)",
+          transform: showFloatNav ? "translateY(0)" : "translateY(16px)",
           pointerEvents: showFloatNav ? "auto" : "none",
           transition: "opacity 0.45s ease, transform 0.45s ease",
         }}
