@@ -460,7 +460,7 @@ export default function App() {
 
           <a
             id="maps-btn"
-            href={`https://www.google.com/maps/search/?api=1&query=${eventData.coordinates.lat},${eventData.coordinates.lng}`}
+            href={`https://yandex.ru/maps/?text=${encodeURIComponent(eventData.coordinates.mapQuery)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="reveal d2 inline-flex items-center gap-2.5 py-3.5 px-9 rounded-full text-sm font-normal tracking-wide text-white transition-all duration-300 shadow-md"
@@ -476,7 +476,7 @@ export default function App() {
           <div className="grid grid-cols-3 gap-2 md:gap-3 mt-10 reveal d3">
             {[
               { icon: Clock, top: "Сбор гостей", bot: "18:00" },
-              { icon: MapPin, top: eventData.coordinates.placeName, bot: "Навбахор, 14" },
+              { icon: MapPin, top: eventData.coordinates.placeName, bot: "Зульфияханум, 73" },
               { icon: Car, top: "Парковка", bot: "есть" },
             ].map((t, i) => {
               const Icon = t.icon;
@@ -490,7 +490,7 @@ export default function App() {
             })}
           </div>
 
-          {/* Карта */}
+          {/* Карта (Яндекс.Карты) */}
           <div className="mt-6 reveal d3 rounded-lg overflow-hidden soft-card p-0">
             <iframe
               title="Карта"
@@ -499,7 +499,7 @@ export default function App() {
               style={{ border: 0, display: "block", filter: "grayscale(20%) contrast(0.96) brightness(1.02)" }}
               loading="lazy"
               allowFullScreen
-              src={`https://www.openstreetmap.org/export/embed.html?bbox=${parseFloat(eventData.coordinates.lng) - 0.005}%2C${parseFloat(eventData.coordinates.lat) - 0.003}%2C${parseFloat(eventData.coordinates.lng) + 0.005}%2C${parseFloat(eventData.coordinates.lat) + 0.003}&layer=mapnik&marker=${eventData.coordinates.lat}%2C${eventData.coordinates.lng}`}
+              src={`https://yandex.ru/map-widget/v1/?text=${encodeURIComponent(eventData.coordinates.mapQuery)}&z=16`}
             />
           </div>
         </div>

@@ -90,10 +90,10 @@ export const initialEventData: EventData = {
     hashtag: "#JafarAndSitora2026"
   },
   coordinates: {
-    lat: "38.5598",
-    lng: "68.7870",
+    lat: "41.3261",
+    lng: "69.2797",
     placeName: "Ресторан «Teia»",
-    address: "Ресторан «Teia», ул. Навбахор 14",
-    mapQuery: "Ресторан Teia"
+    address: "г. Ташкент, ул. Зульфияханум, 73",
+    mapQuery: "Ташкент, улица Зульфияханум, 73"
   }
 };
