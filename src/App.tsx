@@ -77,16 +77,16 @@ export default function App() {
   // Telegram WebView: «приклеиваем» плавающую навигацию к нижней грани
   // ВИДИМОЙ области (visual viewport), чтобы она не прыгала, когда тулбар
   // Telegram сворачивается/разворачивается при скролле.
+  // Пиним через CSS-переменную --nav-bottom (НЕ через transform — transform
+  // занят Tailwind-центрированием -translate-x-1/2, иначе навигацию уводит вбок).
   useEffect(() => {
     const vv = window.visualViewport;
     if (!vv) return;
     let raf = 0;
     const apply = () => {
       raf = 0;
-      const nav = document.getElementById("mobile-float-navigation-dock");
-      if (!nav) return;
       const gap = Math.max(0, window.innerHeight - (vv.height + vv.offsetTop));
-      nav.style.transform = `translateX(-50%) translateY(${-gap}px)`;
+      document.documentElement.style.setProperty("--nav-bottom", `${gap + 16}px`);
     };
     const onChange = () => { if (!raf) raf = requestAnimationFrame(apply); };
     vv.addEventListener("resize", onChange);
@@ -676,8 +676,8 @@ export default function App() {
       {showFloatNav && (
         <div
           id="mobile-float-navigation-dock"
-          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center justify-around gap-1 p-1.5 rounded-full shadow-xl max-w-[95vw] md:hidden"
-          style={{ background: "rgba(248,245,239,0.98)", border: "1px solid var(--color-line)" }}
+          className="fixed left-1/2 -translate-x-1/2 z-30 flex items-center justify-around gap-1 p-1.5 rounded-full shadow-xl max-w-[95vw] md:hidden"
+          style={{ bottom: "var(--nav-bottom, 16px)", background: "rgba(248,245,239,0.98)", border: "1px solid var(--color-line)" }}
         >
           {navItems.map((item) => {
             const Icon = item.icon;
