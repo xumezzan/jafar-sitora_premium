@@ -5,13 +5,9 @@ import {
   ChevronDown,
   Calendar,
   Shirt,
-  Heart,
-  Utensils,
-  Music,
   Camera,
   MessageSquare,
   X,
-  GlassWater,
   Car,
   AlertCircle,
 } from "lucide-react";
@@ -38,9 +34,6 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const scheduleRef = useRef<HTMLDivElement | null>(null);
-  const [reachedAgendaSteps, setReachedAgendaSteps] = useState<boolean[]>(
-    eventData.schedule.map(() => false)
-  );
 
   // Загрузка списка RSVP
   const refreshRsvps = async (newRsvp?: RsvpResponse) => {
@@ -100,14 +93,6 @@ export default function App() {
   // Скролл: прогресс таймлайна, плавающая навигация, активная секция
   useEffect(() => {
     const handleScroll = () => {
-      if (scheduleRef.current) {
-        const rect = scheduleRef.current.getBoundingClientRect();
-        const viewportH = window.innerHeight;
-        const progress = Math.max(0, Math.min(1, (viewportH - rect.top) / (rect.height + viewportH * 0.2)));
-        const stepsCount = eventData.schedule.length;
-        setReachedAgendaSteps(eventData.schedule.map((_, i) => progress > (i + 0.5) / stepsCount));
-      }
-
       setShowFloatNav(window.scrollY > window.innerHeight * 0.6);
 
       const sectionIds = ["when-section", "location-section", "schedule-section", "dress-code-section", "rsvp-section"];
@@ -475,72 +460,88 @@ export default function App() {
       </section>
 
       {/* ── ПРОГРАММА ── */}
-      <section id="schedule-section" ref={scheduleRef} className="relative py-24 px-6 overflow-hidden" style={{ background: "var(--color-bg-alt)" }}>
+      <section id="schedule-section" ref={scheduleRef} className="relative py-20 px-6 overflow-hidden" style={{ background: "var(--color-bg)" }}>
         <CornerLeaf src={LEAF} pos="bl" width={170} className="opacity-50" />
 
-        <div className="max-w-2xl mx-auto relative z-10">
-          <SectionTitle eyebrow="Тайминг дня" title="Программа вечера" />
+        <div className="max-w-xl mx-auto relative z-10">
+          {/* Заголовок в стиле макета: Программа + курсивное дня */}
+          <div className="text-center mb-10 reveal">
+            <h2 className="font-serif inline" style={{ color: INK, fontWeight: 500, fontSize: "clamp(2.4rem,8vw,3.2rem)" }}>
+              Программа{" "}
+              <em style={{ color: ACCENT, fontWeight: 400 }}>дня</em>
+            </h2>
+          </div>
+          <Ornament className="reveal d1 mb-12" />
 
-          <div className="relative">
-            {/* Вертикальная линия таймлайна */}
-            <span className="absolute top-3 bottom-3 w-px" style={{ left: 96, background: "var(--color-line)" }} aria-hidden />
-
-            <div className="space-y-7">
-              {eventData.schedule.map((item, i) => {
-                const isActive = reachedAgendaSteps[i];
-                const isPhoto = item.icon === "camera";
-                const Icon =
-                  item.icon === "camera" ? Camera :
-                  item.icon === "users" ? GlassWater :
-                  item.icon === "heart" ? Heart :
-                  item.icon === "utensils" ? Utensils :
-                  item.icon === "music" ? Music : Heart;
-                return (
-                  <div key={i} id={`schedule-timeline-item-${i}`} className="relative flex items-start gap-4 reveal reveal-left">
-                    {/* Время */}
-                    <div className="w-16 shrink-0 pt-2 text-right">
-                      <span className="text-sm md:text-base font-medium" style={{ color: ACCENT_DEEP }}>{item.time}</span>
-                    </div>
-
-                    {/* Иконка-бейдж на линии */}
-                    <div className="relative shrink-0 z-10">
-                      <div
-                        className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500"
-                        style={{
-                          background: isActive ? ACCENT : "var(--color-card)",
-                          border: `1px solid ${isActive ? ACCENT : "var(--color-line)"}`,
-                          boxShadow: "0 8px 18px -12px rgba(46,59,66,0.5)",
-                        }}
-                      >
-                        <Icon className="w-5 h-5" style={{ color: isActive ? "#fff" : ACCENT }} />
-                      </div>
-                    </div>
-
-                    {/* Карточка */}
+          {/* Строки расписания */}
+          <div>
+            {eventData.schedule.map((item, i) => {
+              const isPhoto = item.icon === "camera";
+              return (
+                <div key={i} id={`schedule-timeline-item-${i}`}>
+                  {isPhoto ? (
+                    /* ── Выделенная строка фотосессии: пунктирная рамка ── */
                     <div
-                      className="flex-1 rounded-lg p-4 transition-all"
+                      className="reveal d1 flex gap-6 px-5 py-5 my-3 rounded-sm"
                       style={{
-                        background: isPhoto ? "rgba(93,116,136,0.10)" : "transparent",
-                        border: isPhoto ? `1px solid rgba(93,116,136,0.32)` : "1px solid transparent",
+                        border: `1.5px dashed rgba(93,116,136,0.55)`,
+                        background: "rgba(93,116,136,0.05)",
                       }}
                     >
-                      <h4
-                        className="font-serif text-xl md:text-2xl"
-                        style={{ color: isPhoto ? ACCENT_DEEP : INK, fontWeight: 500 }}
-                      >
-                        {item.title}
-                      </h4>
-                      <p
-                        className="text-sm font-light leading-relaxed mt-1"
-                        style={{ color: MUTED, fontStyle: isPhoto ? "italic" : "normal" }}
-                      >
-                        {item.description}
-                      </p>
+                      <div className="w-16 shrink-0">
+                        <span
+                          className="font-serif italic"
+                          style={{ color: ACCENT, fontSize: "1.35rem", fontWeight: 400 }}
+                        >
+                          {item.time}
+                        </span>
+                      </div>
+                      <div className="flex-1">
+                        <h4
+                          className="text-sm tracking-[0.14em] uppercase font-medium flex items-center gap-2"
+                          style={{ color: ACCENT_DEEP }}
+                        >
+                          <Camera className="w-3.5 h-3.5 shrink-0" />
+                          {item.title}
+                        </h4>
+                        <p
+                          className="text-sm font-light leading-relaxed mt-1.5 italic"
+                          style={{ color: MUTED }}
+                        >
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  ) : (
+                    /* ── Обычная строка: время + разделитель + заголовок+описание ── */
+                    <div
+                      className={`reveal flex gap-6 py-5 ${i < eventData.schedule.length - 1 && !isPhoto ? "border-b" : ""}`}
+                      style={{ borderColor: "var(--color-line)" }}
+                    >
+                      <div className="w-16 shrink-0">
+                        <span
+                          className="font-serif italic"
+                          style={{ color: ACCENT, fontSize: "1.35rem", fontWeight: 400 }}
+                        >
+                          {item.time}
+                        </span>
+                      </div>
+                      <div className="flex-1">
+                        <h4
+                          className="text-xs tracking-[0.14em] uppercase font-semibold mb-1.5"
+                          style={{ color: INK }}
+                        >
+                          {item.title}
+                        </h4>
+                        <p className="text-sm font-light leading-relaxed" style={{ color: MUTED }}>
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
