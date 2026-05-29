@@ -9,13 +9,13 @@ import {
   MessageSquare,
   X,
   Car,
-  AlertCircle,
 } from "lucide-react";
 import { EventData, RsvpResponse } from "./types";
 import { initialEventData } from "./data";
 import AudioPlayer from "./components/AudioPlayer";
 import RsvpForm from "./components/RsvpForm";
 import { Ornament, Sprig, CornerLeaf } from "./components/Decor";
+import DressCodeSlider from "./components/DressCodeSlider";
 
 const ACCENT = "#5d7488";
 const ACCENT_DEEP = "#46596a";
@@ -546,74 +546,28 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── ДРЕСС-КОД ── */}
-      <section id="dress-code-section" className="relative py-24 px-6 overflow-hidden">
+      {/* ── ДРЕСС-КОД: слайдер ── */}
+      <section id="dress-code-section" className="relative py-20 px-6 overflow-hidden">
         <CornerLeaf src={LEAF} pos="tr" width={150} flip className="opacity-40" />
         <CornerLeaf src={LEAF} pos="bl" width={150} className="opacity-40" delay={1.8} />
 
-        <div className="max-w-2xl mx-auto relative z-10">
-          <SectionTitle eyebrow="Гардероб" title="Дресс-код" />
+        <div className="max-w-md mx-auto relative z-10">
+          {/* Заголовок */}
+          <div className="text-center mb-3 reveal">
+            <span className="block text-[11px] tracking-[0.32em] uppercase font-medium mb-4" style={{ color: ACCENT }}>
+              Пожелание
+            </span>
+            <h2 className="font-serif inline" style={{ color: INK, fontWeight: 500, fontSize: "clamp(2.4rem,8vw,3.2rem)" }}>
+              Дресс-<em style={{ color: ACCENT_DEEP, fontWeight: 400 }}>код</em>
+            </h2>
+          </div>
+          <Ornament className="reveal d1 mb-6" />
 
-          <p className="text-base font-light leading-relaxed text-center reveal mb-8" style={{ color: MUTED }}>
-            Наш вечер — это особый праздник, и мы мечтаем видеть вас во всём великолепии. Просим
-            соблюдать дресс-код.
+          <p className="text-center font-serif italic text-lg reveal d2 mb-8 leading-snug" style={{ color: MUTED }}>
+            Листайте, чтобы узнать<br />наши пожелания к образу
           </p>
 
-          {/* Блок ВАЖНО */}
-          <div className="reveal d1 soft-card rounded-lg p-5 flex items-start gap-4 mb-8">
-            <div className="w-10 h-10 rounded-full border flex items-center justify-center shrink-0" style={{ borderColor: ACCENT }}>
-              <AlertCircle className="w-5 h-5" style={{ color: ACCENT }} />
-            </div>
-            <div>
-              <span className="block text-xs uppercase tracking-[0.18em] font-medium mb-1.5" style={{ color: INK }}>Важно</span>
-              <p className="text-sm font-light leading-relaxed" style={{ color: MUTED }}>
-                Просим воздержаться от <span style={{ color: ACCENT_DEEP }}>белого</span> и{" "}
-                <span style={{ color: ACCENT_DEEP }}>чёрного</span> цвета — эти оттенки зарезервированы
-                для молодожёнов. Пожалуйста, выбирайте наряды в других элегантных оттенках.
-              </p>
-            </div>
-          </div>
-
-          {/* Карточки Black Tie / Cocktail */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              {
-                title: "Black Tie",
-                sub: "Смокинг, вечернее платье",
-                men: "Смокинг, белая рубашка, бабочка, классические туфли",
-                women: "Вечернее платье в пол, элегантные украшения, туфли на каблуке",
-              },
-              {
-                title: "Cocktail",
-                sub: "Костюм, коктейльное или вечернее платье",
-                men: "Костюм, рубашка, галстук или без галстука, классические туфли",
-                women: "Коктейльное или вечернее платье, элегантные украшения, туфли на каблуке",
-              },
-            ].map((c, i) => (
-              <div key={i} className={`reveal ${i === 0 ? "reveal-left" : "reveal-right"} d${i + 1} soft-card rounded-lg overflow-hidden`}>
-                <div className="text-center pt-6 pb-5 px-5" style={{ background: "var(--color-bg-alt)" }}>
-                  <h3 className="font-serif text-2xl tracking-wide" style={{ color: INK, fontWeight: 500 }}>{c.title}</h3>
-                  <Ornament className="my-3" />
-                  <p className="text-sm font-light" style={{ color: MUTED }}>{c.sub}</p>
-                </div>
-                <div className="px-5 py-6 space-y-5">
-                  <div className="text-center">
-                    <span className="block text-[10px] uppercase tracking-[0.2em] font-medium mb-1.5" style={{ color: ACCENT }}>Для мужчин</span>
-                    <p className="text-sm font-light leading-relaxed" style={{ color: MUTED }}>{c.men}</p>
-                  </div>
-                  <div className="text-center">
-                    <span className="block text-[10px] uppercase tracking-[0.2em] font-medium mb-1.5" style={{ color: ACCENT }}>Для женщин</span>
-                    <p className="text-sm font-light leading-relaxed" style={{ color: MUTED }}>{c.women}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-center text-sm font-light reveal d2 mt-8" style={{ color: MUTED }}>
-            Спасибо, что разделите этот день с нами и соблюдаете дресс-код!
-          </p>
-          <Ornament className="reveal d2 mt-5" />
+          <DressCodeSlider accentDeep={ACCENT_DEEP} muted={MUTED} ink={INK} />
         </div>
       </section>
 
