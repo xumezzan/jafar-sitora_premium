@@ -139,18 +139,10 @@ export default function App() {
   const BigDate = ({ light = false }: { light?: boolean }) => {
     const col = light ? "#ffffff" : ACCENT_DEEP;
     return (
-      <div className="flex items-center justify-center gap-3 select-none font-serif" style={{ color: col }}>
-        <span className="text-6xl md:text-7xl leading-none" style={{ fontWeight: 500 }}>
-          29
-        </span>
-        <span className="flex flex-col items-start leading-none">
-          <span className="text-sm md:text-base uppercase tracking-[0.28em] mb-1" style={{ opacity: 0.85 }}>
-            августа
-          </span>
-          <span className="text-4xl md:text-5xl" style={{ fontWeight: 500 }}>
-            2026
-          </span>
-        </span>
+      <div className="flex items-center justify-center gap-2 select-none font-serif flex-wrap" style={{ color: col }}>
+        <span className="text-5xl md:text-6xl leading-none" style={{ fontWeight: 500 }}>29</span>
+        <span className="text-xl md:text-2xl uppercase tracking-[0.22em] leading-none" style={{ opacity: 0.85, fontWeight: 400 }}>августа</span>
+        <span className="text-5xl md:text-6xl leading-none" style={{ fontWeight: 500 }}>2026</span>
       </div>
     );
   };
