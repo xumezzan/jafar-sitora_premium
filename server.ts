@@ -113,6 +113,20 @@ app.get("/api/rsvp", async (req, res) => {
   }
 });
 
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbz7P8lO6WJmwp7THJ2RS38VWpEYBPJTMuhiJIGPHLQ21OuPRH_T4ROtNq-hMDodXX2K/exec";
+
+async function sendToGoogleSheet(entry: { name: string; status: string; wishes: string }) {
+  try {
+    await fetch(GOOGLE_SHEET_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(entry),
+    });
+  } catch (err) {
+    console.error("Google Sheet sync failed:", err);
+  }
+}
+
 // API: Submit RSVP
 app.post("/api/rsvp", async (req, res) => {
   try {
@@ -135,6 +149,10 @@ app.post("/api/rsvp", async (req, res) => {
 
     list.unshift(newEntry);
     await writeRsvp(list);
+
+    // Sync to Google Sheets (non-blocking)
+    sendToGoogleSheet({ name, status: newEntry.status, wishes: newEntry.wishes });
+
     res.status(201).json(newEntry);
   } catch (err) {
     res.status(500).json({ error: "Failed to save RSVP" });
