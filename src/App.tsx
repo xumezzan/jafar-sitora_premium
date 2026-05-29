@@ -157,7 +157,7 @@ export default function App() {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(58,68,65,0.28) 0%, rgba(58,68,65,0.05) 28%, rgba(58,68,65,0.10) 55%, rgba(58,68,65,0.62) 100%)",
+                "linear-gradient(to bottom, rgba(40,50,46,0.30) 0%, rgba(40,50,46,0.02) 25%, rgba(40,50,46,0.05) 45%, rgba(40,50,46,0.72) 75%, rgba(40,50,46,0.85) 100%)",
             }}
           />
         </div>
@@ -169,19 +169,15 @@ export default function App() {
           </span>
         </div>
 
-        {/* Center names */}
-        <div className="relative z-10 text-center px-6">
-          <h1 className="text-white leading-[0.95] drop-shadow-sm" style={{ fontFamily: "'Pacifico', cursive" }}>
-            <span className="block text-5xl md:text-7xl">{eventData.groomName}</span>
-            <span className="block text-lg md:text-xl my-4 font-light tracking-[0.3em] uppercase text-white/80" style={{ fontFamily: "'Raleway', sans-serif" }}>
+        {/* Bottom: names + date + scroll hint */}
+        <div className="absolute bottom-10 left-0 right-0 z-10 flex flex-col items-center gap-5 px-6">
+          <h1 className="text-white text-center leading-tight drop-shadow-sm" style={{ fontFamily: "'Pacifico', cursive" }}>
+            <span className="block text-4xl md:text-6xl">{eventData.groomName}</span>
+            <span className="block text-base md:text-lg my-2 font-light tracking-[0.3em] uppercase text-white/75" style={{ fontFamily: "'Raleway', sans-serif" }}>
               &amp;
             </span>
-            <span className="block text-5xl md:text-7xl">{eventData.brideName}</span>
+            <span className="block text-4xl md:text-6xl">{eventData.brideName}</span>
           </h1>
-        </div>
-
-        {/* Bottom: accented date + scroll hint */}
-        <div className="absolute bottom-12 left-0 right-0 z-10 flex flex-col items-center gap-6 px-6">
           <DateAccent light />
           <div className="flex flex-col items-center gap-1.5 animate-bounce opacity-80">
             <span className="text-[9px] uppercase tracking-[0.3em] font-light text-white/80">листайте вниз</span>
