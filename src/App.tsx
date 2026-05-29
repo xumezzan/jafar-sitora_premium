@@ -171,9 +171,9 @@ export default function App() {
 
         {/* Center names */}
         <div className="relative z-10 text-center px-6">
-          <h1 className="font-serif italic text-white leading-[0.95] drop-shadow-sm">
+          <h1 className="text-white leading-[0.95] drop-shadow-sm" style={{ fontFamily: "'Pacifico', cursive" }}>
             <span className="block text-5xl md:text-7xl">{eventData.groomName}</span>
-            <span className="block text-lg md:text-xl my-3 not-italic font-light tracking-[0.3em] uppercase text-white/80">
+            <span className="block text-lg md:text-xl my-4 font-light tracking-[0.3em] uppercase text-white/80" style={{ fontFamily: "'Raleway', sans-serif" }}>
               &amp;
             </span>
             <span className="block text-5xl md:text-7xl">{eventData.brideName}</span>
@@ -409,7 +409,7 @@ export default function App() {
         </div>
 
         <div className="relative z-10 space-y-7 max-w-lg">
-          <h2 className="text-4xl md:text-5xl font-serif italic text-white leading-tight">
+          <h2 className="text-4xl md:text-5xl text-white leading-tight" style={{ fontFamily: "'Pacifico', cursive" }}>
             До скорой <br />встречи!
           </h2>
           <div className="divider" style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.7), transparent)" }} />

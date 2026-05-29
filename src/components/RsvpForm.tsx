@@ -109,7 +109,7 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
     fontSize: "15px",
     outline: "none",
     transition: "border-color 0.3s",
-    fontFamily: "Jost, sans-serif",
+    fontFamily: "Raleway, sans-serif",
     fontWeight: 300,
   };
 
