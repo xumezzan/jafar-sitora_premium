@@ -187,22 +187,30 @@ input::placeholder, textarea::placeholder { color: #8B9198; opacity: 1; }
 }
 
 /* Адаптация под низкие экраны (iPhone SE и т.п.): сжимаем стек имён+даты,
-   чтобы он целиком поместился под лицами пары в нижней безопасной зоне. */
-@media (max-height: 740px) {
-  .hero-name   { font-size: 2.05rem !important; }  /* было 5xl=3rem */
-  .hero-amp    { margin-block: 0 !important; font-size: 0.9rem !important; }
-  .hero-stack  { gap: 0.35rem !important; }
-  .hero-divider { display: none !important; }      /* убираем веточку-разделитель ради места */
-  .hero-date   { transform: scale(0.72); margin-block: -0.2rem; } /* дата компактнее */
-  .hero-chevron { margin-top: -0.1rem !important; }
-  .final-title { font-size: 2.6rem !important; }
-  .final-stack { gap: 0.5rem !important; }
-}
-@media (max-height: 640px) {
-  .hero-name   { font-size: 1.85rem !important; }
-  .hero-date   { transform: scale(0.66); }
-  .final-title { font-size: 2.3rem !important; }
-}
+   чтобы он целиком поместился под лицами пары в нижней безопасной зоне.
+
+   ВАЖНО: используем tier-классы (.h-compact / .h-tiny), которые JS выставляет
+   на <html> ОДИН раз при загрузке (см. App.tsx), а НЕ @media(max-height).
+   В Telegram WebView высота окна меняется при сворачивании тулбара во время
+   скролла — с @media это пересекало порог и шрифт скакал («зум/прыжок»).
+   Tier-класс фиксируется при загрузке и при скролле уже не меняется. */
+.h-compact .hero-name    { font-size: 2.05rem !important; }  /* было 5xl=3rem */
+.h-compact .hero-amp     { margin-block: 0 !important; font-size: 0.9rem !important; }
+.h-compact .hero-stack   { gap: 0.35rem !important; }
+.h-compact .hero-divider { display: none !important; }       /* убираем веточку-разделитель ради места */
+.h-compact .hero-date    { transform: scale(0.72); margin-block: -0.2rem; } /* дата компактнее */
+.h-compact .hero-chevron { margin-top: -0.1rem !important; }
+.h-compact .final-title  { font-size: 2.6rem !important; }
+.h-compact .final-stack  { gap: 0.5rem !important; }
+
+.h-tiny .hero-name    { font-size: 1.85rem !important; }
+.h-tiny .hero-amp     { margin-block: 0 !important; font-size: 0.9rem !important; }
+.h-tiny .hero-stack   { gap: 0.35rem !important; }
+.h-tiny .hero-divider { display: none !important; }
+.h-tiny .hero-date    { transform: scale(0.66); margin-block: -0.2rem; }
+.h-tiny .hero-chevron { margin-top: -0.1rem !important; }
+.h-tiny .final-title  { font-size: 2.3rem !important; }
+.h-tiny .final-stack  { gap: 0.5rem !important; }
 
 /* Текст поверх фото всегда читается: лёгкая тень для премиум-вида */
 .photo-text { text-shadow: 0 2px 18px rgba(20, 28, 36, 0.45); }

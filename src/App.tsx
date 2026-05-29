@@ -57,14 +57,47 @@ export default function App() {
   // Фиксируем высоту hero/финала ОДИН раз (и только на смену ориентации).
   // В Telegram WebView 100svh/100vh дёргается при появлении/скрытии тулбара —
   // поэтому пишем абсолютную высоту в CSS-переменную и НЕ трогаем её на скролл.
+  // Заодно выставляем tier-класс по высоте: он заменяет @media(max-height),
+  // который раньше менял размер шрифта на лету при сворачивании тулбара
+  // (это и был эффект «зум/прыжок» текста на hero и финале).
   useEffect(() => {
+    const root = document.documentElement;
     const setH = () => {
-      document.documentElement.style.setProperty("--app-height", `${window.innerHeight}px`);
+      const h = window.innerHeight;
+      root.style.setProperty("--app-height", `${h}px`);
+      root.classList.toggle("h-tiny", h <= 640);
+      root.classList.toggle("h-compact", h > 640 && h <= 740);
     };
     setH();
-    window.addEventListener("orientationchange", () => setTimeout(setH, 250));
-    return () => window.removeEventListener("orientationchange", setH);
+    const onOrient = () => setTimeout(setH, 250);
+    window.addEventListener("orientationchange", onOrient);
+    return () => window.removeEventListener("orientationchange", onOrient);
   }, []);
+
+  // Telegram WebView: «приклеиваем» плавающую навигацию к нижней грани
+  // ВИДИМОЙ области (visual viewport), чтобы она не прыгала, когда тулбар
+  // Telegram сворачивается/разворачивается при скролле.
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    let raf = 0;
+    const apply = () => {
+      raf = 0;
+      const nav = document.getElementById("mobile-float-navigation-dock");
+      if (!nav) return;
+      const gap = Math.max(0, window.innerHeight - (vv.height + vv.offsetTop));
+      nav.style.transform = `translateX(-50%) translateY(${-gap}px)`;
+    };
+    const onChange = () => { if (!raf) raf = requestAnimationFrame(apply); };
+    vv.addEventListener("resize", onChange);
+    vv.addEventListener("scroll", onChange);
+    onChange();
+    return () => {
+      vv.removeEventListener("resize", onChange);
+      vv.removeEventListener("scroll", onChange);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [showFloatNav]);
 
   // Обратный отсчёт
   useEffect(() => {
@@ -643,7 +676,7 @@ export default function App() {
       {showFloatNav && (
         <div
           id="mobile-float-navigation-dock"
-          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center justify-around gap-1 p-1.5 rounded-full shadow-xl max-w-[95vw] md:hidden transition-all duration-300"
+          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center justify-around gap-1 p-1.5 rounded-full shadow-xl max-w-[95vw] md:hidden"
           style={{ background: "rgba(248,245,239,0.98)", border: "1px solid var(--color-line)" }}
         >
           {navItems.map((item) => {
