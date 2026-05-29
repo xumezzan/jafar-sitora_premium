@@ -17,10 +17,10 @@ import RsvpForm from "./components/RsvpForm";
 import { Ornament, Sprig, CornerLeaf } from "./components/Decor";
 import DressCodeSlider from "./components/DressCodeSlider";
 
-const ACCENT = "#5d7488";
-const ACCENT_DEEP = "#46596a";
-const INK = "#2f3b42";
-const MUTED = "#6f7b80";
+const ACCENT = "#3d5a6e";
+const ACCENT_DEEP = "#2b4050";
+const INK = "#1a2428";
+const MUTED = "#3d4f56";
 
 // Пути к декоративным PNG-веточкам (положите в public/). Если файла нет — он просто не покажется.
 const LEAF = "/leaf.png";

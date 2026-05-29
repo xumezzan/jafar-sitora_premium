@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Music2, Volume2 } from "lucide-react";
 
-const ACCENT = "#46596a";
+const ACCENT = "#2b4050";
 
 // Кладите файл в public/music.mp3
 const MUSIC_SRC = "/music.mp3";

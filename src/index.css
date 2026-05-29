@@ -9,10 +9,10 @@
   --color-bg: #f4f1ea;        /* warm ivory */
   --color-bg-alt: #ece7dd;    /* мягкий тёплый песок */
   --color-card: #f8f5ef;      /* светлая карточка */
-  --color-ink: #2f3b42;       /* глубокий сине-серый текст */
-  --color-muted: #6f7b80;     /* приглушённый сине-серый */
-  --color-accent: #5d7488;    /* пыльно-голубой */
-  --color-accent-deep: #46596a;
+  --color-ink: #1a2428;       /* очень тёмный сине-серый */
+  --color-muted: #3d4f56;     /* тёмный приглушённый */
+  --color-accent: #3d5a6e;    /* более тёмный пыльно-голубой */
+  --color-accent-deep: #2b4050;
   --color-accent-soft: #aeb9c2;
   --color-line: rgba(70, 89, 106, 0.18);
 
