@@ -164,12 +164,12 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "var(--color-bg)", color: INK }}>
+    <div className="min-h-screen font-sans overflow-x-hidden" style={{ color: INK }}>
       {/* ── ФИКСИРОВАННАЯ ШАПКА ── */}
       <header className="fixed top-0 left-0 right-0 z-40">
         <div
           className="flex items-center justify-between px-5 py-3.5 backdrop-blur-md"
-          style={{ background: "rgba(244,241,234,0.78)", borderBottom: "1px solid var(--color-line)" }}
+          style={{ background: "rgba(237,236,234,0.82)", borderBottom: "1px solid var(--color-line)" }}
         >
           <button
             onClick={() => setMenuOpen(true)}
@@ -195,7 +195,7 @@ export default function App() {
       >
         <nav
           className={`absolute top-0 left-0 h-full w-72 max-w-[80vw] px-7 pt-8 transition-transform duration-400 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
-          style={{ background: "var(--color-bg)" }}
+          style={{ background: "transparent" }}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-between mb-10">
@@ -308,7 +308,7 @@ export default function App() {
                 className="w-full h-[420px] object-cover"
                 style={{ objectPosition: "50% 28%" }}
               />
-              <div className="py-7 px-4 text-center" style={{ background: "var(--color-card)" }}>
+              <div className="py-7 px-4 text-center" style={{ background: "rgba(237,236,234,0.85)" }}>
                 <span className="block text-[10px] uppercase tracking-[0.3em] mb-2" style={{ color: ACCENT }}>
                   Наша свадьба
                 </span>
@@ -326,7 +326,7 @@ export default function App() {
       </section>
 
       {/* ── КОГДА: обратный отсчёт ── */}
-      <section id="when-section" className="relative py-24 px-6 overflow-hidden" style={{ background: "var(--color-bg-alt)" }}>
+      <section id="when-section" className="relative py-24 px-6 overflow-hidden" style={{ background: "transparent" }}>
         <CornerLeaf src={LEAF} pos="bl" width={160} className="opacity-50" />
         <CornerLeaf src={LEAF} pos="tr" width={130} flip className="opacity-30" delay={2} />
 
@@ -460,7 +460,7 @@ export default function App() {
       </section>
 
       {/* ── ПРОГРАММА ── */}
-      <section id="schedule-section" ref={scheduleRef} className="relative py-20 px-6 overflow-hidden" style={{ background: "var(--color-bg)" }}>
+      <section id="schedule-section" ref={scheduleRef} className="relative py-20 px-6 overflow-hidden" style={{ background: "transparent" }}>
         <CornerLeaf src={LEAF} pos="bl" width={170} className="opacity-50" />
 
         <div className="max-w-xl mx-auto relative z-10">
@@ -572,7 +572,7 @@ export default function App() {
       </section>
 
       {/* ── RSVP ── */}
-      <section id="rsvp-section" className="relative py-24 px-6 overflow-hidden" style={{ background: "var(--color-bg-alt)" }}>
+      <section id="rsvp-section" className="relative py-24 px-6 overflow-hidden" style={{ background: "transparent" }}>
         <CornerLeaf src={LEAF} pos="tr" width={160} flip className="opacity-50" />
         <CornerLeaf src={LEAF} pos="bl" width={130} className="opacity-30" delay={2} />
 

@@ -28,7 +28,15 @@
 }
 
 html { scroll-behavior: smooth; }
-body { background: var(--color-bg); color: var(--color-ink); }
+body {
+  background-color: #edecea;
+  background-image: url('/bg-texture.png');
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center top;
+  color: var(--color-ink);
+}
 
 /* ─────────────────────────────────────────────
    REVEAL: анимации появления при скролле
@@ -123,7 +131,8 @@ body { background: var(--color-bg); color: var(--color-ink); }
 
 /* Карточка с мягкой тенью в стиле скриншотов */
 .soft-card {
-  background: var(--color-card);
+  background: rgba(237, 236, 234, 0.75);
   border: 1px solid var(--color-line);
-  box-shadow: 0 18px 40px -28px rgba(46, 59, 66, 0.4);
+  box-shadow: 0 18px 40px -28px rgba(46, 59, 66, 0.3);
+  backdrop-filter: blur(2px);
 }
