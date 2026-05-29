@@ -285,7 +285,7 @@ export default function App() {
           </h2>
           <Ornament className="reveal d2 mb-8" />
 
-          <p className="text-base md:text-lg leading-loose font-light reveal d2" style={{ color: MUTED }}>
+          <p className="font-serif text-base md:text-lg leading-loose reveal d2" style={{ color: MUTED, fontWeight: 400 }}>
             Дорогие друзья и близкие! С большой радостью приглашаем вас разделить с нами один из
             самых важных дней нашей жизни. Будем счастливы видеть вас среди гостей нашего торжества.
           </p>
