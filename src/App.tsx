@@ -216,20 +216,22 @@ export default function App() {
       </div>
 
       {/* ── HERO ── */}
-      <section id="welcome-screen" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      <section id="welcome-screen" className="relative overflow-hidden" style={{ height: "100svh", minHeight: 600 }}>
+        {/* Фото занимает верхние ~65% — лица хорошо видны */}
         <div className="absolute inset-0">
           <img
             src={eventData.heroImage}
             alt="Джаъфар и Ситора"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
-            style={{ objectPosition: "50% 30%" }}
+            style={{ objectPosition: "50% 18%" }}
           />
+          {/* Затемнение только снизу, где текст */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(40,50,58,0.42) 0%, rgba(40,50,58,0.12) 24%, rgba(40,50,58,0.10) 46%, rgba(40,50,58,0.55) 74%, rgba(40,50,58,0.80) 100%)",
+                "linear-gradient(to bottom, rgba(30,40,48,0.25) 0%, transparent 30%, transparent 50%, rgba(30,40,48,0.55) 72%, rgba(30,40,48,0.85) 100%)",
             }}
           />
         </div>
@@ -239,31 +241,30 @@ export default function App() {
           <span className="text-[11px] tracking-[0.45em] uppercase font-light text-white/85">Wedding Day</span>
         </div>
 
-        {/* Имена + орнамент + дата — внизу, лица свободны */}
-        <div className="absolute bottom-16 left-0 right-0 z-10 text-center px-6 soft-in flex flex-col items-center gap-4" style={{ animationDelay: "0.2s" }}>
-          <h1 className="font-serif text-white leading-[0.95] drop-shadow-md" style={{ fontWeight: 500 }}>
+        {/* Имена + дата — прижаты к самому низу */}
+        <div className="absolute bottom-10 left-0 right-0 z-10 text-center px-6 soft-in flex flex-col items-center gap-3" style={{ animationDelay: "0.2s" }}>
+          <h1 className="font-serif text-white leading-[0.95] drop-shadow-lg" style={{ fontWeight: 500 }}>
             <span className="block text-5xl md:text-7xl">{eventData.groomName}</span>
-            <span className="block text-2xl md:text-3xl my-2 opacity-75">&amp;</span>
+            <span className="block text-xl md:text-2xl my-1.5 opacity-75">&amp;</span>
             <span className="block text-5xl md:text-7xl">{eventData.brideName}</span>
           </h1>
 
-          <div className="flex items-center justify-center gap-3 text-white/70">
-            <span className="h-px w-12" style={{ background: "rgba(255,255,255,0.5)" }} />
-            <Sprig color="#ffffff" />
-            <span className="h-px w-12" style={{ background: "rgba(255,255,255,0.5)" }} />
+          <div className="flex items-center justify-center gap-3 text-white/60">
+            <span className="h-px w-10" style={{ background: "rgba(255,255,255,0.45)" }} />
+            <Sprig color="rgba(255,255,255,0.8)" />
+            <span className="h-px w-10" style={{ background: "rgba(255,255,255,0.45)" }} />
           </div>
 
           <BigDate light />
-        </div>
 
-        {/* Стрелка вниз */}
-        <button
-          onClick={() => scrollTo("about-section")}
-          className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 cursor-pointer animate-bounce"
-          aria-label="Листать вниз"
-        >
-          <ChevronDown className="w-5 h-5 text-white/70" />
-        </button>
+          <button
+            onClick={() => scrollTo("about-section")}
+            className="mt-2 cursor-pointer animate-bounce"
+            aria-label="Листать вниз"
+          >
+            <ChevronDown className="w-5 h-5 text-white/60" />
+          </button>
+        </div>
       </section>
 
       {/* ── ПРИГЛАШЕНИЕ + арочное фото ── */}
@@ -575,24 +576,27 @@ export default function App() {
       </section>
 
       {/* ── ФИНАЛ ── */}
-      <section id="final-screen" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden text-center px-6">
+      <section id="final-screen" className="relative overflow-hidden text-center" style={{ height: "100svh", minHeight: 600 }}>
         <div className="absolute inset-0">
           <img
             src="/photo2.jpg"
             alt="Джаъфар и Ситора"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
+            style={{ objectPosition: "50% 20%" }}
           />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(40,50,58,0.5) 0%, rgba(40,50,58,0.32) 50%, rgba(40,50,58,0.62) 100%)" }} />
+          {/* Затемнение только сверху (где текст) и чуть снизу */}
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(30,40,48,0.75) 0%, rgba(30,40,48,0.45) 35%, transparent 55%, rgba(30,40,48,0.35) 100%)" }} />
         </div>
 
-        <div className="relative z-10 space-y-6 max-w-lg reveal reveal-blur">
+        {/* Текст сверху — лица открыты снизу */}
+        <div className="absolute top-20 left-0 right-0 z-10 px-6 text-center reveal reveal-blur flex flex-col items-center gap-5">
           <h2 className="font-serif text-5xl md:text-6xl text-white leading-tight" style={{ fontWeight: 500 }}>
             До скорой
             <br />
             встречи!
           </h2>
-          <div className="flex items-center justify-center gap-3 text-white/80">
+          <div className="flex items-center justify-center gap-3">
             <span className="h-px w-14" style={{ background: "rgba(255,255,255,0.5)" }} />
             <Sprig color="#ffffff" />
             <span className="h-px w-14" style={{ background: "rgba(255,255,255,0.5)" }} />
