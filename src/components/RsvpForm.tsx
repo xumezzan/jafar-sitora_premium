@@ -7,11 +7,11 @@ interface RsvpFormProps {
   onSuccess: (newRsvp: RsvpResponse) => void;
 }
 
-const ACCENT = "#7b928a";
-const ACCENT_DEEP = "#54665e";
-const INK = "#3c4541";
-const MUTED = "#847f74";
-const LINE = "rgba(84,102,94,0.2)";
+const ACCENT = "#5d7488";
+const ACCENT_DEEP = "#46596a";
+const INK = "#2f3b42";
+const MUTED = "#6f7b80";
+const LINE = "rgba(70,89,106,0.18)";
 
 export default function RsvpForm({ onSuccess }: RsvpFormProps) {
   const [name, setName] = useState("");
@@ -103,8 +103,9 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
   const inputStyle: React.CSSProperties = {
     background: "var(--color-bg)",
     border: `1px solid ${LINE}`,
+    borderRadius: "10px",
     color: INK,
-    padding: "11px 13px",
+    padding: "13px 15px",
     width: "100%",
     fontSize: "15px",
     outline: "none",
@@ -114,7 +115,7 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
   };
 
   return (
-    <div className="p-6 md:p-8 relative" style={{ background: "var(--color-bg)", border: `1px solid ${LINE}` }}>
+    <div className="p-6 md:p-9 relative rounded-2xl" style={{ background: "var(--color-card)", border: `1px solid ${LINE}`, boxShadow: "0 24px 50px -34px rgba(46,59,66,0.45)" }}>
       {isDone ? (
         <div id="rsvp-success-block" className="flex flex-col items-center justify-center py-12 text-center">
           <div
@@ -172,11 +173,11 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
                     key={opt.v}
                     type="button"
                     onClick={() => setStatus(opt.v)}
-                    className="py-3 text-sm font-light cursor-pointer transition-all duration-200"
+                    className="py-3.5 rounded-xl text-sm font-light cursor-pointer transition-all duration-200"
                     style={{
                       border: `1px solid ${active ? ACCENT : LINE}`,
-                      background: active ? "rgba(123,146,138,0.15)" : "transparent",
-                      color: active ? ACCENT_DEEP : MUTED,
+                      background: active ? ACCENT : "transparent",
+                      color: active ? "#fff" : MUTED,
                     }}
                   >
                     {opt.label}
@@ -265,10 +266,10 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
             id="rsvp-submit-button"
             type="submit"
             disabled={isSubmitting}
-            className="w-full cursor-pointer py-3.5 tracking-[0.18em] text-[11px] font-light uppercase transition-all duration-300"
-            style={{ border: `1px solid ${ACCENT_DEEP}`, color: ACCENT_DEEP, background: "transparent" }}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "rgba(123,146,138,0.14)")}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}
+            className="w-full cursor-pointer py-4 rounded-xl tracking-[0.18em] text-[12px] font-light uppercase text-white transition-all duration-300"
+            style={{ background: ACCENT, boxShadow: "0 16px 30px -18px rgba(70,89,106,0.7)" }}
+            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = ACCENT_DEEP)}
+            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = ACCENT)}
           >
             {isSubmitting ? (
               <span className="flex items-center gap-2 justify-center">

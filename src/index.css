@@ -1,37 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif: "Inter", system-ui, sans-serif;
-  --font-sans: "Poppins", system-ui, sans-serif;
-  --font-accent: "Great Vibes", cursive;
+  --font-serif: "Cormorant Garamond", Georgia, serif;  /* display / заголовки / имена */
+  --font-sans: "Poppins", system-ui, sans-serif;        /* основной текст */
+  --font-accent: "Great Vibes", cursive;                /* рукописный акцент */
 
-  /* Warm ivory base + muted dusty blue-green accent (tied to the couple photo) */
-  --color-bg: #f3f0e9;       /* warm ivory */
-  --color-bg-alt: #ebe6db;   /* soft warm sand */
-  --color-ink: #3c4541;      /* deep earthy slate-green, low contrast */
-  --color-muted: #847f74;    /* warm dusty taupe-green */
-  --color-accent: #7b928a;   /* mixed dusty blue-green */
-  --color-accent-deep: #54665e;
-  --color-line: rgba(84, 102, 94, 0.2);
+  /* Тёплый ivory + пыльно-голубой акцент (как на скриншотах) */
+  --color-bg: #f4f1ea;        /* warm ivory */
+  --color-bg-alt: #ece7dd;    /* мягкий тёплый песок */
+  --color-card: #f8f5ef;      /* светлая карточка */
+  --color-ink: #2f3b42;       /* глубокий сине-серый текст */
+  --color-muted: #6f7b80;     /* приглушённый сине-серый */
+  --color-accent: #5d7488;    /* пыльно-голубой */
+  --color-accent-deep: #46596a;
+  --color-accent-soft: #aeb9c2;
+  --color-line: rgba(70, 89, 106, 0.18);
 
-  /* Soundbars keyframes for Audio Player */
-  @keyframes bar-1 {
-    0%, 100% { transform: scaleY(0.3); }
-    50% { transform: scaleY(1.0); }
-  }
-  @keyframes bar-2 {
-    0%, 100% { transform: scaleY(1.0); }
-    50% { transform: scaleY(0.4); }
-  }
-  @keyframes bar-3 {
-    0%, 100% { transform: scaleY(0.5); }
-    50% { transform: scaleY(1.2); }
-  }
-
-  @keyframes reveal-up {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  /* Soundbars keyframes для аудиоплеера */
+  @keyframes bar-1 { 0%,100% { transform: scaleY(0.3); } 50% { transform: scaleY(1.0); } }
+  @keyframes bar-2 { 0%,100% { transform: scaleY(1.0); } 50% { transform: scaleY(0.4); } }
+  @keyframes bar-3 { 0%,100% { transform: scaleY(0.5); } 50% { transform: scaleY(1.2); } }
 
   --animate-bar-1: bar-1 0.8s ease-in-out infinite;
   --animate-bar-2: bar-2 0.7s ease-in-out infinite;
@@ -39,21 +27,103 @@
   --animate-spin-slow: spin 14s linear infinite;
 }
 
-/* Scroll-triggered reveal */
+html { scroll-behavior: smooth; }
+body { background: var(--color-bg); color: var(--color-ink); }
+
+/* ─────────────────────────────────────────────
+   REVEAL: анимации появления при скролле
+   Базовый класс + варианты направления/задержки.
+   .visible выставляется через IntersectionObserver.
+   ───────────────────────────────────────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.9s ease, transform 0.9s ease;
+  transform: translateY(34px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+.reveal.visible { opacity: 1; transform: none; }
+
+.reveal-left  { transform: translateX(-40px); }
+.reveal-right { transform: translateX(40px); }
+.reveal-scale { transform: scale(0.92); }
+.reveal-blur  { filter: blur(8px); transition: opacity 1s ease, transform 1s ease, filter 1s ease; }
+.reveal-blur.visible { filter: blur(0); }
+
+/* Поэтапные задержки для эффекта «набегающего» текста */
+.reveal.d1 { transition-delay: 0.08s; }
+.reveal.d2 { transition-delay: 0.18s; }
+.reveal.d3 { transition-delay: 0.28s; }
+.reveal.d4 { transition-delay: 0.40s; }
+.reveal.d5 { transition-delay: 0.52s; }
+
+/* Появление по словам/буквам (для имён) */
+@keyframes letter-rise {
+  from { opacity: 0; transform: translateY(0.4em); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.letter-rise > span {
+  display: inline-block;
+  opacity: 0;
+  animation: letter-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Thin centered divider in accent */
+/* Плавный «вход» секции при загрузке hero */
+@keyframes soft-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.soft-in { animation: soft-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Лёгкое «дыхание» декоративных веточек */
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50%      { transform: translateY(-8px) rotate(var(--rot, 0deg)); }
+}
+.float-soft { animation: float-soft 7s ease-in-out infinite; }
+
+/* ─────────────────────────────────────────────
+   Декоративный орнамент-разделитель (веточка)
+   ───────────────────────────────────────────── */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--color-accent);
+}
+.ornament::before,
+.ornament::after {
+  content: "";
+  height: 1px;
+  width: 46px;
+  background: linear-gradient(to right, transparent, var(--color-accent-soft));
+}
+.ornament::after { background: linear-gradient(to left, transparent, var(--color-accent-soft)); }
+
+/* Тонкий центрированный разделитель */
 .divider {
   width: 56px;
   height: 1px;
-  background: linear-gradient(to right, transparent, #7b928a, transparent);
+  background: linear-gradient(to right, transparent, var(--color-accent), transparent);
   margin: 0 auto;
+}
+
+/* Арочная маска для фото (скруглённый верх) */
+.arch-top {
+  border-top-left-radius: 50% 22%;
+  border-top-right-radius: 50% 22%;
+  overflow: hidden;
+}
+
+/* Волнистый нижний край блока с фото (location) */
+.wavy-bottom {
+  -webkit-mask-image: radial-gradient(28px at 50% 100%, transparent 98%, black 100%);
+}
+
+/* Карточка с мягкой тенью в стиле скриншотов */
+.soft-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 18px 40px -28px rgba(46, 59, 66, 0.4);
 }
