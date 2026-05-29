@@ -574,9 +574,6 @@ export default function App() {
 
         <div className="max-w-xl mx-auto relative z-10">
           <SectionTitle eyebrow="Подтверждение участия" title="RSVP" />
-          <p className="text-center text-sm font-light reveal -mt-6 mb-8" style={{ color: TEXT }}>
-            Пожалуйста, подтвердите участие до 1 июля 2026 года.
-          </p>
           <div className="reveal d1">
             <RsvpForm onSuccess={refreshRsvps} />
           </div>
