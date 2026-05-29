@@ -140,3 +140,64 @@ input::placeholder, textarea::placeholder { color: #8B9198; opacity: 1; }
   box-shadow: 0 18px 40px -28px rgba(36, 52, 71, 0.2);
   backdrop-filter: blur(3px);
 }
+
+/* ─────────────────────────────────────────────
+   FACE-FIRST SAFE ZONES (фото-герои)
+   Фото — портретные (~0.67), все телефоны уже/выше
+   (0.46–0.56), поэтому object-cover показывает ПОЛНУЮ
+   высоту фото и обрезает боковины. Значит лица всегда
+   на одних и тех же % высоты → текст можно жёстко
+   привязать к безопасным полосам в % и vh, без оверлеев
+   на лица на любом устройстве (SE → Pro Max → Galaxy).
+
+   photo1 (hero): лица 28–62% → текст сверху <22% и снизу >70%
+   photo2 (final): лица 28–52% → текст в верхней трети неба
+   ───────────────────────────────────────────── */
+
+/* Верхняя безопасная зона: «эйбрау» над головами */
+.safe-top {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: max(7%, env(safe-area-inset-top, 0px));
+  z-index: 10;
+}
+
+/* Нижняя безопасная зона hero: имена + дата под руками пары */
+.safe-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 3svh);
+  z-index: 10;
+}
+
+/* Заголовок финального экрана — в верхней трети (небо) */
+.safe-final-top {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: max(9%, env(safe-area-inset-top, 0px));
+  z-index: 10;
+}
+
+/* Адаптация под низкие экраны (iPhone SE и т.п.): сжимаем стек имён+даты,
+   чтобы он целиком поместился под лицами пары в нижней безопасной зоне. */
+@media (max-height: 740px) {
+  .hero-name   { font-size: 2.05rem !important; }  /* было 5xl=3rem */
+  .hero-amp    { margin-block: 0 !important; font-size: 0.9rem !important; }
+  .hero-stack  { gap: 0.35rem !important; }
+  .hero-divider { display: none !important; }      /* убираем веточку-разделитель ради места */
+  .hero-date   { transform: scale(0.72); margin-block: -0.2rem; } /* дата компактнее */
+  .hero-chevron { margin-top: -0.1rem !important; }
+  .final-title { font-size: 2.6rem !important; }
+  .final-stack { gap: 0.5rem !important; }
+}
+@media (max-height: 640px) {
+  .hero-name   { font-size: 1.85rem !important; }
+  .hero-date   { transform: scale(0.66); }
+  .final-title { font-size: 2.3rem !important; }
+}
+
+/* Текст поверх фото всегда читается: лёгкая тень для премиум-вида */
+.photo-text { text-shadow: 0 2px 18px rgba(20, 28, 36, 0.45); }

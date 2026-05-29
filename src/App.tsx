@@ -216,51 +216,58 @@ export default function App() {
         </nav>
       </div>
 
-      {/* ── HERO ── */}
+      {/* ── HERO ──
+          Face-First: лица пары (28–62% высоты фото) остаются открытыми.
+          «Wedding Day» — верхняя безопасная зона (небо над головами),
+          имена + дата — нижняя безопасная зона (под сцепленными руками). */}
       <section id="welcome-screen" className="relative overflow-hidden" style={{ height: "100svh", minHeight: 600 }}>
-        {/* Фото занимает верхние ~65% — лица хорошо видны */}
         <div className="absolute inset-0">
           <img
             src={eventData.heroImage}
             alt="Джаъфар и Ситора"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
-            style={{ objectPosition: "50% 18%" }}
+            style={{ objectPosition: "50% 20%" }}
           />
-          {/* Затемнение только снизу, где текст */}
+          {/* Затемнение ТОЛЬКО в безопасных зонах (верх/низ), центр с лицами — чистый */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(30,40,48,0.25) 0%, transparent 30%, transparent 50%, rgba(30,40,48,0.55) 72%, rgba(30,40,48,0.85) 100%)",
+                "linear-gradient(to bottom, rgba(30,40,48,0.6) 0%, rgba(30,40,48,0.22) 18%, transparent 30%, transparent 60%, rgba(30,40,48,0.35) 78%, rgba(30,40,48,0.78) 100%)",
             }}
           />
         </div>
 
-        {/* Эйбрау сверху */}
-        <div className="absolute top-20 left-0 right-0 text-center z-10 soft-in">
-          <span className="text-[11px] tracking-[0.45em] uppercase font-light text-white/85">Wedding Day</span>
+        {/* Эйбрау сверху — над головами (safe-top) */}
+        <div className="safe-top text-center soft-in">
+          <span className="text-[11px] tracking-[0.45em] uppercase font-light text-white/90 photo-text">Wedding Day</span>
         </div>
 
-        {/* Имена + дата — прижаты к самому низу */}
-        <div className="absolute bottom-10 left-0 right-0 z-10 text-center px-6 soft-in flex flex-col items-center gap-3" style={{ animationDelay: "0.2s" }}>
-          <h1 className="font-serif text-white leading-[0.95] drop-shadow-lg" style={{ fontWeight: 500 }}>
-            <span className="block text-5xl md:text-7xl">{eventData.groomName}</span>
-            <span className="block text-xl md:text-2xl my-1.5 opacity-75">&amp;</span>
-            <span className="block text-5xl md:text-7xl">{eventData.brideName}</span>
+        {/* Имена + дата — нижняя безопасная зона, лица полностью открыты */}
+        <div
+          className="safe-bottom hero-stack text-center px-6 soft-in flex flex-col items-center gap-3"
+          style={{ animationDelay: "0.2s" }}
+        >
+          <h1 className="font-serif text-white leading-[0.95] photo-text" style={{ fontWeight: 500 }}>
+            <span className="hero-name block text-5xl md:text-7xl">{eventData.groomName}</span>
+            <span className="hero-amp block text-xl md:text-2xl my-1.5 opacity-75">&amp;</span>
+            <span className="hero-name block text-5xl md:text-7xl">{eventData.brideName}</span>
           </h1>
 
-          <div className="flex items-center justify-center gap-3 text-white/60">
+          <div className="hero-divider flex items-center justify-center gap-3 text-white/60">
             <span className="h-px w-10" style={{ background: "rgba(255,255,255,0.45)" }} />
             <Sprig color="rgba(255,255,255,0.8)" />
             <span className="h-px w-10" style={{ background: "rgba(255,255,255,0.45)" }} />
           </div>
 
-          <BigDate light />
+          <div className="hero-date">
+            <BigDate light />
+          </div>
 
           <button
             onClick={() => scrollTo("about-section")}
-            className="mt-2 cursor-pointer animate-bounce"
+            className="hero-chevron mt-1 cursor-pointer animate-bounce"
             aria-label="Листать вниз"
           >
             <ChevronDown className="w-5 h-5 text-white/60" />
@@ -576,7 +583,9 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── ФИНАЛ ── */}
+      {/* ── ФИНАЛ ──
+          Face-First: лица пары (28–52% высоты) полностью открыты.
+          Заголовок + подпись — только в верхней трети (небо, 0–26%). */}
       <section id="final-screen" className="relative overflow-hidden text-center" style={{ height: "100svh", minHeight: 600 }}>
         <div className="absolute inset-0">
           <img
@@ -584,15 +593,15 @@ export default function App() {
             alt="Джаъфар и Ситора"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
-            style={{ objectPosition: "50% 20%" }}
+            style={{ objectPosition: "50% 30%" }}
           />
-          {/* Затемнение только сверху (где текст) и чуть снизу */}
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(30,40,48,0.75) 0%, rgba(30,40,48,0.45) 35%, transparent 55%, rgba(30,40,48,0.35) 100%)" }} />
+          {/* Затемнение в верхней трети (под текст) — лица в чистой зоне */}
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(30,40,48,0.78) 0%, rgba(30,40,48,0.5) 18%, rgba(30,40,48,0.12) 27%, transparent 40%, transparent 90%, rgba(30,40,48,0.4) 100%)" }} />
         </div>
 
-        {/* Текст сверху — лица открыты снизу */}
-        <div className="absolute top-20 left-0 right-0 z-10 px-6 text-center reveal reveal-blur flex flex-col items-center gap-5">
-          <h2 className="font-serif text-5xl md:text-6xl text-white leading-tight" style={{ fontWeight: 500 }}>
+        {/* Текст в верхней трети (небо) — компактный блок над головами */}
+        <div className="safe-final-top final-stack px-6 text-center reveal reveal-blur flex flex-col items-center gap-3">
+          <h2 className="final-title font-serif text-5xl md:text-6xl text-white leading-tight photo-text" style={{ fontWeight: 500 }}>
             До скорой
             <br />
             встречи!
@@ -602,7 +611,7 @@ export default function App() {
             <Sprig color="#ffffff" />
             <span className="h-px w-14" style={{ background: "rgba(255,255,255,0.5)" }} />
           </div>
-          <p className="text-xs uppercase tracking-[0.28em] font-light text-white/85 leading-relaxed">
+          <p className="text-xs uppercase tracking-[0.28em] font-light text-white/90 leading-relaxed photo-text">
             С нетерпением ждём встречи,
             <br />
             {eventData.groomName} &amp; {eventData.brideName}
