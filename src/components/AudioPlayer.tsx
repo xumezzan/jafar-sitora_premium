@@ -120,7 +120,7 @@ export default function AudioPlayer({ compact = false }: { compact?: boolean }) 
         }}
       >
         <Volume2 className="w-4 h-4" />
-        <span className="text-[10px] font-light tracking-[0.12em]">{isPlaying ? "Играет" : "Музыка"}</span>
+        <span className="text-[10px] font-normal tracking-[0.12em]">{isPlaying ? "Играет" : "Музыка"}</span>
       </button>
     </>
   );

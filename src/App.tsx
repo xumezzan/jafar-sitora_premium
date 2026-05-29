@@ -128,7 +128,7 @@ export default function App() {
       </span>
       <h2
         className="font-serif text-4xl md:text-5xl reveal d1 mb-4"
-        style={{ color: INK, fontWeight: 500, letterSpacing: "0.01em" }}
+        style={{ color: INK, fontWeight: 600, letterSpacing: "0.01em" }}
       >
         {title}
       </h2>
@@ -141,9 +141,9 @@ export default function App() {
     const col = light ? "#ffffff" : ACCENT_DEEP;
     return (
       <div className="flex items-center justify-center gap-2 select-none font-serif flex-wrap" style={{ color: col }}>
-        <span className="text-5xl md:text-6xl leading-none" style={{ fontWeight: 500 }}>29</span>
+        <span className="text-5xl md:text-6xl leading-none" style={{ fontWeight: 600 }}>29</span>
         <span className="text-xl md:text-2xl uppercase tracking-[0.22em] leading-none" style={{ opacity: 0.85, fontWeight: 400 }}>августа</span>
-        <span className="text-5xl md:text-6xl leading-none" style={{ fontWeight: 500 }}>2026</span>
+        <span className="text-5xl md:text-6xl leading-none" style={{ fontWeight: 600 }}>2026</span>
       </div>
     );
   };
@@ -241,7 +241,7 @@ export default function App() {
 
         {/* Эйбрау сверху — над головами (safe-top) */}
         <div className="safe-top text-center soft-in">
-          <span className="text-[11px] tracking-[0.28em] uppercase font-light text-white/90 photo-text">Wedding Day</span>
+          <span className="text-[11px] tracking-[0.28em] uppercase font-normal text-white/90 photo-text">Wedding Day</span>
         </div>
 
         {/* Имена + дата — нижняя безопасная зона, лица полностью открыты */}
@@ -249,7 +249,7 @@ export default function App() {
           className="safe-bottom hero-stack text-center px-6 soft-in flex flex-col items-center gap-1.5"
           style={{ animationDelay: "0.2s" }}
         >
-          <h1 className="font-serif text-white leading-[0.95] photo-text" style={{ fontWeight: 500 }}>
+          <h1 className="font-serif text-white leading-[0.95] photo-text" style={{ fontWeight: 600 }}>
             <span className="hero-name block text-5xl md:text-7xl">{eventData.groomName}</span>
             <span className="hero-amp block text-xl md:text-2xl my-1.5 opacity-75">&amp;</span>
             <span className="hero-name block text-5xl md:text-7xl">{eventData.brideName}</span>
@@ -284,7 +284,7 @@ export default function App() {
           <span className="block text-[11px] tracking-[0.32em] uppercase font-medium reveal mb-4" style={{ color: ACCENT }}>
             Wedding Day
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl reveal d1 mb-4" style={{ color: INK, fontWeight: 500 }}>
+          <h2 className="font-serif text-4xl md:text-5xl reveal d1 mb-4" style={{ color: INK, fontWeight: 600 }}>
             Приглашаем вас
           </h2>
           <Ornament className="reveal d2 mb-8" />
@@ -308,11 +308,11 @@ export default function App() {
                 <span className="block text-[10px] uppercase tracking-[0.3em] mb-2" style={{ color: ACCENT }}>
                   Наша свадьба
                 </span>
-                <div className="font-serif text-3xl md:text-4xl mb-3" style={{ color: ACCENT_DEEP, fontWeight: 500 }}>
+                <div className="font-serif text-3xl md:text-4xl mb-3" style={{ color: ACCENT_DEEP, fontWeight: 600 }}>
                   29 августа 2026
                 </div>
                 <Ornament />
-                <span className="block mt-3 text-[11px] uppercase tracking-[0.25em] font-light" style={{ color: MUTED }}>
+                <span className="block mt-3 text-[11px] uppercase tracking-[0.25em] font-normal" style={{ color: MUTED }}>
                   Мы будем рады видеть вас!
                 </span>
               </div>
@@ -334,7 +334,7 @@ export default function App() {
 
           {/* Огромное число дней */}
           <div className="reveal reveal-scale d1 mb-2">
-            <div className="font-serif leading-none" style={{ color: ACCENT, fontSize: "min(34vw, 200px)", fontWeight: 500 }}>
+            <div className="font-serif leading-none" style={{ color: ACCENT, fontSize: "min(34vw, 200px)", fontWeight: 600 }}>
               {countdown.days}
             </div>
             <div className="font-serif italic text-3xl -mt-3" style={{ color: ACCENT }}>
@@ -350,17 +350,17 @@ export default function App() {
               { label: "секунд", val: countdown.seconds },
             ].map((node, i) => (
               <div key={i} className="soft-card py-5 rounded-sm">
-                <div className="font-serif text-3xl md:text-4xl" style={{ color: ACCENT_DEEP, fontWeight: 500 }}>
+                <div className="font-serif text-3xl md:text-4xl" style={{ color: ACCENT_DEEP, fontWeight: 600 }}>
                   {String(node.val).padStart(2, "0")}
                 </div>
-                <div className="text-[9px] uppercase tracking-[0.18em] font-light mt-1.5" style={{ color: MUTED }}>
+                <div className="text-[9px] uppercase tracking-[0.18em] font-normal mt-1.5" style={{ color: MUTED }}>
                   {node.label}
                 </div>
               </div>
             ))}
           </div>
 
-          <p className="mt-10 text-sm md:text-base font-light leading-relaxed reveal d3" style={{ color: TEXT }}>
+          <p className="mt-10 text-sm md:text-base font-normal leading-relaxed reveal d3" style={{ color: TEXT }}>
             До самого важного дня мы отсчитываем каждую минуту
             <br className="hidden md:block" /> и с нетерпением ждём встречи с вами!
           </p>
@@ -381,10 +381,10 @@ export default function App() {
             <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(40,50,58,0.45), rgba(40,50,58,0.15) 45%, rgba(40,50,58,0.05))" }} />
             <div className="absolute top-0 left-0 right-0 pt-20 px-6 text-center">
               <Ornament className="mb-3" color="#ffffff" />
-              <h2 className="font-serif text-4xl md:text-5xl text-white drop-shadow" style={{ fontWeight: 500 }}>
+              <h2 className="font-serif text-4xl md:text-5xl text-white drop-shadow" style={{ fontWeight: 600 }}>
                 Где и когда?
               </h2>
-              <p className="mt-3 text-sm font-light text-white/85 max-w-xs mx-auto">
+              <p className="mt-3 text-sm font-normal text-white/85 max-w-xs mx-auto">
                 Мы с удовольствием поделимся с вами местом, где всё начнётся.
               </p>
             </div>
@@ -399,13 +399,13 @@ export default function App() {
         </div>
 
         <div className="px-6 pt-14 pb-24 max-w-2xl mx-auto text-center">
-          <h3 className="font-serif text-3xl md:text-4xl reveal" style={{ color: INK, fontWeight: 500 }}>
+          <h3 className="font-serif text-3xl md:text-4xl reveal" style={{ color: INK, fontWeight: 600 }}>
             {eventData.coordinates.placeName}
           </h3>
           <Ornament className="reveal d1 my-4" />
           <div className="flex items-center justify-center gap-1.5 reveal d1 mb-7" style={{ color: MUTED }}>
             <MapPin className="w-4 h-4" />
-            <span className="text-sm font-light">{eventData.coordinates.address}</span>
+            <span className="text-sm font-normal">{eventData.coordinates.address}</span>
           </div>
 
           <a
@@ -413,7 +413,7 @@ export default function App() {
             href={`https://www.google.com/maps/search/?api=1&query=${eventData.coordinates.lat},${eventData.coordinates.lng}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="reveal d2 inline-flex items-center gap-2.5 py-3.5 px-9 rounded-full text-sm font-light tracking-wide text-white transition-all duration-300 shadow-md"
+            className="reveal d2 inline-flex items-center gap-2.5 py-3.5 px-9 rounded-full text-sm font-normal tracking-wide text-white transition-all duration-300 shadow-md"
             style={{ background: ACCENT }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = ACCENT_DEEP)}
             onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = ACCENT)}
@@ -462,7 +462,7 @@ export default function App() {
         <div className="max-w-xl mx-auto relative z-10">
           {/* Заголовок в стиле макета: Программа + курсивное дня */}
           <div className="text-center mb-10 reveal">
-            <h2 className="font-serif inline" style={{ color: INK, fontWeight: 500, fontSize: "clamp(2.4rem,8vw,3.2rem)" }}>
+            <h2 className="font-serif inline" style={{ color: INK, fontWeight: 600, fontSize: "clamp(2.4rem,8vw,3.2rem)" }}>
               Программа{" "}
               <em style={{ color: ACCENT, fontWeight: 400 }}>дня</em>
             </h2>
@@ -553,7 +553,7 @@ export default function App() {
             <span className="block text-[11px] tracking-[0.32em] uppercase font-medium mb-4" style={{ color: ACCENT }}>
               Пожелание
             </span>
-            <h2 className="font-serif inline" style={{ color: INK, fontWeight: 500, fontSize: "clamp(2.4rem,8vw,3.2rem)" }}>
+            <h2 className="font-serif inline" style={{ color: INK, fontWeight: 600, fontSize: "clamp(2.4rem,8vw,3.2rem)" }}>
               Дресс-<em style={{ color: ACCENT_DEEP, fontWeight: 400 }}>код</em>
             </h2>
           </div>
@@ -598,7 +598,7 @@ export default function App() {
 
         {/* Текст в верхней трети (небо) — компактный блок над головами */}
         <div className="safe-final-top final-stack px-6 text-center reveal reveal-blur flex flex-col items-center gap-3">
-          <h2 className="final-title font-serif text-5xl md:text-6xl text-white leading-tight photo-text" style={{ fontWeight: 500 }}>
+          <h2 className="final-title font-serif text-5xl md:text-6xl text-white leading-tight photo-text" style={{ fontWeight: 600 }}>
             До скорой
             <br />
             встречи!
@@ -608,14 +608,14 @@ export default function App() {
             <Sprig color="#ffffff" />
             <span className="h-px w-14" style={{ background: "rgba(255,255,255,0.5)" }} />
           </div>
-          <p className="text-xs uppercase tracking-[0.28em] font-light text-white/90 leading-relaxed photo-text">
+          <p className="text-xs uppercase tracking-[0.28em] font-normal text-white/90 leading-relaxed photo-text">
             С нетерпением ждём встречи,
             <br />
             {eventData.groomName} &amp; {eventData.brideName}
           </p>
         </div>
 
-        <div className="absolute bottom-6 left-0 right-0 z-10 text-[9px] tracking-[0.25em] uppercase font-light text-white/55">
+        <div className="absolute bottom-6 left-0 right-0 z-10 text-[9px] tracking-[0.25em] uppercase font-normal text-white/55">
           © 2026 · {eventData.coupleNames}
         </div>
       </section>
@@ -642,7 +642,7 @@ export default function App() {
                 }}
               >
                 <Icon className="w-3.5 h-3.5" />
-                <span className="font-light tracking-tight text-[8px]">{item.label}</span>
+                <span className="font-normal tracking-tight text-[8px]">{item.label}</span>
               </button>
             );
           })}

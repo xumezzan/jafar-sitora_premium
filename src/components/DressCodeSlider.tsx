@@ -9,9 +9,9 @@ const slides = [
       <>
         <p className="text-base font-semibold mb-3" style={{ color: ink }}>
           Black Tie, Cocktail{" "}
-          <span className="font-light" style={{ color: muted }}>или образы в этом стиле.</span>
+          <span className="font-normal" style={{ color: muted }}>или образы в этом стиле.</span>
         </p>
-        <p className="text-sm font-light leading-relaxed" style={{ color: muted }}>
+        <p className="text-sm font-normal leading-relaxed" style={{ color: muted }}>
           Мы очень ценим праздничную атмосферу вечера и просим вас отказаться от джинсов и
           спортивной одежды.
         </p>
@@ -46,7 +46,7 @@ const slides = [
           Также просим воздержаться от полностью{" "}
           <span className="font-semibold" style={{ color: muted }}>чёрного цвета</span> в одежде.
         </p>
-        <p className="text-sm font-light" style={{ color: muted }}>
+        <p className="text-sm font-normal" style={{ color: muted }}>
           Любые другие цвета приветствуются!
         </p>
       </>

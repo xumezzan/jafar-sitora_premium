@@ -110,8 +110,8 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
     fontSize: "15px",
     outline: "none",
     transition: "border-color 0.3s",
-    fontFamily: "Poppins, sans-serif",
-    fontWeight: 300,
+    fontFamily: "Inter, sans-serif",
+    fontWeight: 400,
   };
 
   return (
@@ -127,7 +127,7 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
           <h4 className="text-2xl font-serif italic mb-2" style={{ color: ACCENT_DEEP }}>
             Спасибо за ответ!
           </h4>
-          <p className="text-sm max-w-sm font-light leading-relaxed" style={{ color: MUTED }}>
+          <p className="text-sm max-w-sm font-normal leading-relaxed" style={{ color: MUTED }}>
             Ваше подтверждение успешно отправлено. Мы с нетерпением ждём встречи с вами!
           </p>
         </div>
@@ -142,7 +142,7 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
 
           {/* Имя */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[10px] uppercase tracking-[0.18em] font-light" style={{ color: MUTED }}>
+            <label className="text-[10px] uppercase tracking-[0.18em] font-normal" style={{ color: MUTED }}>
               Имя и фамилия
             </label>
             <input
@@ -159,7 +159,7 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
 
           {/* Присутствие: только да/нет */}
           <div className="flex flex-col gap-2">
-            <label className="text-[10px] uppercase tracking-[0.18em] font-light" style={{ color: MUTED }}>
+            <label className="text-[10px] uppercase tracking-[0.18em] font-normal" style={{ color: MUTED }}>
               Сможете присутствовать?
             </label>
             <div className="grid grid-cols-2 gap-2.5">
@@ -173,7 +173,7 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
                     key={opt.v}
                     type="button"
                     onClick={() => setStatus(opt.v)}
-                    className="py-3.5 rounded-xl text-sm font-light cursor-pointer transition-all duration-200"
+                    className="py-3.5 rounded-xl text-sm font-normal cursor-pointer transition-all duration-200"
                     style={{
                       border: `1px solid ${active ? ACCENT : LINE}`,
                       background: active ? ACCENT : "transparent",
@@ -190,7 +190,7 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
           {/* Пожелания + ИИ */}
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between mb-1">
-              <label className="text-[10px] uppercase tracking-[0.18em] font-light" style={{ color: MUTED }}>
+              <label className="text-[10px] uppercase tracking-[0.18em] font-normal" style={{ color: MUTED }}>
                 Пожелания молодожёнам
               </label>
               <button
@@ -206,12 +206,12 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
 
             {showAiHelper && (
               <div className="p-4 mb-3 space-y-3 text-xs" style={{ background: "var(--color-bg-alt)", border: `1px solid ${LINE}` }}>
-                <div className="text-[11px] font-light leading-relaxed" style={{ color: MUTED }}>
+                <div className="text-[11px] font-normal leading-relaxed" style={{ color: MUTED }}>
                   Поможем составить тёплое поздравление для молодожёнов:
                 </div>
                 <div className="grid grid-cols-2 gap-2.5">
                   <div className="flex flex-col gap-1">
-                    <span className="text-[9px] uppercase font-light tracking-wide" style={{ color: MUTED }}>Связь с парой</span>
+                    <span className="text-[9px] uppercase font-normal tracking-wide" style={{ color: MUTED }}>Связь с парой</span>
                     <select value={aiRelation} onChange={(e) => setAiRelation(e.target.value)} style={{ ...inputStyle, padding: "7px 9px", fontSize: "13px" }}>
                       <option value="friend">Друг / подруга</option>
                       <option value="family">Родственник</option>
@@ -219,7 +219,7 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
                     </select>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <span className="text-[9px] uppercase font-light tracking-wide" style={{ color: MUTED }}>Стиль</span>
+                    <span className="text-[9px] uppercase font-normal tracking-wide" style={{ color: MUTED }}>Стиль</span>
                     <select value={aiStyle} onChange={(e) => setAiStyle(e.target.value)} style={{ ...inputStyle, padding: "7px 9px", fontSize: "13px" }}>
                       <option value="minimalist">Изящный краткий</option>
                       <option value="humorous">С лёгким юмором</option>
@@ -229,7 +229,7 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
                 </div>
                 {!name.trim() && (
                   <div className="flex flex-col gap-1">
-                    <span className="text-[9px] uppercase font-light tracking-wide" style={{ color: MUTED }}>Ваше имя</span>
+                    <span className="text-[9px] uppercase font-normal tracking-wide" style={{ color: MUTED }}>Ваше имя</span>
                     <input type="text" placeholder="Чтобы вписать в открытку" value={aiName} onChange={(e) => setAiName(e.target.value)} style={{ ...inputStyle, padding: "7px 9px", fontSize: "13px" }} />
                   </div>
                 )}
@@ -238,7 +238,7 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
                   type="button"
                   disabled={isGeneratingWish}
                   onClick={handleGenerateWishes}
-                  className="w-full py-2.5 cursor-pointer text-xs font-light tracking-wide flex items-center justify-center gap-1.5 transition-all"
+                  className="w-full py-2.5 cursor-pointer text-xs font-normal tracking-wide flex items-center justify-center gap-1.5 transition-all"
                   style={{ background: "rgba(123,146,138,0.14)", border: `1px solid ${ACCENT}`, color: ACCENT_DEEP }}
                 >
                   {isGeneratingWish ? (
@@ -266,7 +266,7 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
             id="rsvp-submit-button"
             type="submit"
             disabled={isSubmitting}
-            className="w-full cursor-pointer py-4 rounded-xl tracking-[0.18em] text-[12px] font-light uppercase text-white transition-all duration-300"
+            className="w-full cursor-pointer py-4 rounded-xl tracking-[0.18em] text-[12px] font-normal uppercase text-white transition-all duration-300"
             style={{ background: ACCENT, boxShadow: "0 16px 30px -18px rgba(70,89,106,0.7)" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = ACCENT_DEEP)}
             onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = ACCENT)}

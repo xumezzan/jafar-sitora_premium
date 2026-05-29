@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif: "Cormorant Garamond", Georgia, serif;  /* display / заголовки / имена */
-  --font-sans: "Poppins", system-ui, sans-serif;        /* основной текст */
-  --font-accent: "Great Vibes", cursive;                /* рукописный акцент */
+  --font-serif: "Playfair Display", Georgia, serif;  /* display / заголовки / имена */
+  --font-sans: "Inter", system-ui, sans-serif;        /* основной текст */
+  --font-accent: "Great Vibes", cursive;              /* рукописный акцент */
 
   /* Финальная палитра: тёмные заголовки, читаемый текст, чистые карточки */
   --color-bg: #F4F2EF;
