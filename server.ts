@@ -117,11 +117,12 @@ const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbz7P8lO6WJmwp7
 
 async function sendToGoogleSheet(entry: { name: string; status: string; wishes: string }) {
   try {
-    await fetch(GOOGLE_SHEET_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(entry),
+    const params = new URLSearchParams({
+      name: entry.name,
+      status: entry.status,
+      wishes: entry.wishes,
     });
+    await fetch(`${GOOGLE_SHEET_URL}?${params.toString()}`, { method: "GET" });
   } catch (err) {
     console.error("Google Sheet sync failed:", err);
   }
