@@ -161,8 +161,8 @@ export default function App() {
       {/* ── ФИКСИРОВАННАЯ ШАПКА ── */}
       <header className="fixed top-0 left-0 right-0 z-40">
         <div
-          className="flex items-center justify-between px-5 py-3.5 backdrop-blur-md"
-          style={{ background: "rgba(237,236,234,0.82)", borderBottom: "1px solid var(--color-line)" }}
+          className="flex items-center justify-between px-5 py-3.5"
+          style={{ background: "rgba(237,236,234,0.97)", borderBottom: "1px solid var(--color-line)" }}
         >
           <button
             onClick={() => setMenuOpen(true)}
@@ -183,7 +183,7 @@ export default function App() {
       {/* ── ВЫДВИЖНОЕ МЕНЮ ── */}
       <div
         className={`fixed inset-0 z-50 transition-all duration-400 ${menuOpen ? "visible opacity-100" : "invisible opacity-0"}`}
-        style={{ background: "rgba(47,59,66,0.5)", backdropFilter: "blur(4px)" }}
+        style={{ background: "rgba(47,59,66,0.7)" }}
         onClick={() => setMenuOpen(false)}
       >
         <nav
@@ -226,6 +226,8 @@ export default function App() {
             src={eventData.heroImage}
             alt="Джаъфар и Ситора"
             referrerPolicy="no-referrer"
+            fetchPriority="high"
+            decoding="sync"
             className="w-full h-full object-cover"
             style={{ objectPosition: "50% 20%" }}
           />
@@ -267,7 +269,7 @@ export default function App() {
 
           <button
             onClick={() => scrollTo("about-section")}
-            className="hero-chevron mt-1 cursor-pointer animate-bounce"
+            className="hero-chevron mt-1 cursor-pointer"
             aria-label="Листать вниз"
           >
             <ChevronDown className="w-5 h-5 text-white/60" />
@@ -298,9 +300,11 @@ export default function App() {
           <div className="mt-12 reveal reveal-scale d3 mx-auto max-w-md">
             <div className="arch-top soft-card p-0 overflow-hidden">
               <img
-                src={eventData.heroImage}
+                src="/photo2.jpg"
                 alt="Джаъфар и Ситора"
                 referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-[420px] object-cover"
                 style={{ objectPosition: "50% 28%" }}
               />
@@ -376,6 +380,8 @@ export default function App() {
               src="/photo3.jpg"
               alt={eventData.coordinates.placeName}
               referrerPolicy="no-referrer"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(40,50,58,0.45), rgba(40,50,58,0.15) 45%, rgba(40,50,58,0.05))" }} />
@@ -586,9 +592,11 @@ export default function App() {
       <section id="final-screen" className="relative overflow-hidden text-center" style={{ height: "100svh", minHeight: 600 }}>
         <div className="absolute inset-0">
           <img
-            src="/photo2.jpg"
+            src="/photo4.jpg"
             alt="Джаъфар и Ситора"
             referrerPolicy="no-referrer"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover"
             style={{ objectPosition: "50% 42%" }}
           />
@@ -624,8 +632,8 @@ export default function App() {
       {showFloatNav && (
         <div
           id="mobile-float-navigation-dock"
-          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center justify-around gap-1 p-1.5 rounded-full shadow-xl backdrop-blur-md max-w-[95vw] md:hidden transition-all duration-300"
-          style={{ background: "rgba(248,245,239,0.94)", border: "1px solid var(--color-line)" }}
+          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center justify-around gap-1 p-1.5 rounded-full shadow-xl max-w-[95vw] md:hidden transition-all duration-300"
+          style={{ background: "rgba(248,245,239,0.98)", border: "1px solid var(--color-line)" }}
         >
           {navItems.map((item) => {
             const Icon = item.icon;
