@@ -5,16 +5,17 @@
   --font-sans: "Poppins", system-ui, sans-serif;        /* основной текст */
   --font-accent: "Great Vibes", cursive;                /* рукописный акцент */
 
-  /* Тёплый ivory + пыльно-голубой акцент (как на скриншотах) */
-  --color-bg: #f4f1ea;        /* warm ivory */
-  --color-bg-alt: #ece7dd;    /* мягкий тёплый песок */
-  --color-card: #f8f5ef;      /* светлая карточка */
-  --color-ink: #1a2428;       /* очень тёмный сине-серый */
-  --color-muted: #3d4f56;     /* тёмный приглушённый */
-  --color-accent: #3d5a6e;    /* более тёмный пыльно-голубой */
-  --color-accent-deep: #2b4050;
-  --color-accent-soft: #aeb9c2;
-  --color-line: rgba(70, 89, 106, 0.18);
+  /* Финальная палитра: тёмные заголовки, читаемый текст, чистые карточки */
+  --color-bg: #F4F2EF;
+  --color-bg-alt: #EEEcE9;
+  --color-card: #ffffff;
+  --color-ink: #1F2833;       /* заголовки */
+  --color-text: #3F4750;      /* основной текст */
+  --color-muted: #6D7680;     /* вторичный текст */
+  --color-accent: #4F6D87;    /* пыльно-синий */
+  --color-accent-deep: #243447;
+  --color-accent-soft: #a0b4c4;
+  --color-line: rgba(36, 52, 71, 0.15);
 
   /* Soundbars keyframes для аудиоплеера */
   @keyframes bar-1 { 0%,100% { transform: scaleY(0.3); } 50% { transform: scaleY(1.0); } }
@@ -109,6 +110,9 @@ body {
 }
 .ornament::after { background: linear-gradient(to left, transparent, var(--color-accent-soft)); }
 
+/* Тёмный placeholder для форм */
+input::placeholder, textarea::placeholder { color: #8B9198; opacity: 1; }
+
 /* Тонкий центрированный разделитель */
 .divider {
   width: 56px;
@@ -131,8 +135,7 @@ body {
 
 /* Карточка с мягкой тенью в стиле скриншотов */
 .soft-card {
-  background: rgba(237, 236, 234, 0.75);
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--color-line);
-  box-shadow: 0 18px 40px -28px rgba(46, 59, 66, 0.3);
-  backdrop-filter: blur(2px);
+  box-shadow: 0 18px 40px -28px rgba(36, 52, 71, 0.25);
 }

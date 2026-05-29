@@ -17,10 +17,11 @@ import RsvpForm from "./components/RsvpForm";
 import { Ornament, Sprig, CornerLeaf } from "./components/Decor";
 import DressCodeSlider from "./components/DressCodeSlider";
 
-const ACCENT = "#3d5a6e";
-const ACCENT_DEEP = "#2b4050";
-const INK = "#1a2428";
-const MUTED = "#3d4f56";
+const ACCENT = "#4F6D87";
+const ACCENT_DEEP = "#243447";
+const INK = "#1F2833";       // заголовки
+const TEXT = "#3F4750";      // основной текст
+const MUTED = "#6D7680";     // вторичный текст
 
 // Пути к декоративным PNG-веточкам (положите в public/). Если файла нет — он просто не покажется.
 const LEAF = "/leaf.png";
@@ -281,7 +282,7 @@ export default function App() {
           </h2>
           <Ornament className="reveal d2 mb-8" />
 
-          <p className="font-serif text-base md:text-lg leading-loose reveal d2" style={{ color: MUTED, fontWeight: 400 }}>
+          <p className="font-serif text-base md:text-lg leading-loose reveal d2" style={{ color: TEXT, fontWeight: 400 }}>
             Дорогие друзья и близкие! С большой радостью приглашаем вас разделить с нами один из
             самых важных дней нашей жизни. Будем счастливы видеть вас среди гостей нашего торжества.
           </p>
@@ -352,7 +353,7 @@ export default function App() {
             ))}
           </div>
 
-          <p className="mt-10 text-sm md:text-base font-light leading-relaxed reveal d3" style={{ color: MUTED }}>
+          <p className="mt-10 text-sm md:text-base font-light leading-relaxed reveal d3" style={{ color: TEXT }}>
             До самого важного дня мы отсчитываем каждую минуту
             <br className="hidden md:block" /> и с нетерпением ждём встречи с вами!
           </p>
@@ -425,8 +426,8 @@ export default function App() {
               return (
                 <div key={i} className="soft-card rounded-lg py-5 px-2 flex flex-col items-center gap-2">
                   <Icon className="w-5 h-5" style={{ color: ACCENT, opacity: 0.7 }} />
-                  <span className="text-xs font-medium leading-tight" style={{ color: INK }}>{t.top}</span>
-                  <span className="text-xs font-light" style={{ color: MUTED }}>{t.bot}</span>
+                  <span className="text-xs font-semibold leading-tight" style={{ color: ACCENT_DEEP }}>{t.top}</span>
+                  <span className="text-xs font-medium" style={{ color: TEXT }}>{t.bot}</span>
                 </div>
               );
             })}
@@ -486,15 +487,15 @@ export default function App() {
                       </div>
                       <div className="flex-1">
                         <h4
-                          className="text-sm tracking-[0.14em] uppercase font-medium flex items-center gap-2"
+                          className="text-sm tracking-[0.14em] uppercase font-semibold flex items-center gap-2"
                           style={{ color: ACCENT_DEEP }}
                         >
                           <Camera className="w-3.5 h-3.5 shrink-0" />
                           {item.title}
                         </h4>
                         <p
-                          className="text-sm font-light leading-relaxed mt-1.5 italic"
-                          style={{ color: MUTED }}
+                          className="text-sm leading-relaxed mt-1.5 italic"
+                          style={{ color: TEXT }}
                         >
                           {item.description}
                         </p>
@@ -516,12 +517,12 @@ export default function App() {
                       </div>
                       <div className="flex-1">
                         <h4
-                          className="text-xs tracking-[0.14em] uppercase font-semibold mb-1.5"
-                          style={{ color: INK }}
+                          className="text-xs tracking-[0.14em] uppercase font-semibold mb-2"
+                          style={{ color: ACCENT_DEEP }}
                         >
                           {item.title}
                         </h4>
-                        <p className="text-sm font-light leading-relaxed" style={{ color: MUTED }}>
+                        <p className="text-sm leading-relaxed" style={{ color: TEXT, lineHeight: "1.7" }}>
                           {item.description}
                         </p>
                       </div>
@@ -551,11 +552,11 @@ export default function App() {
           </div>
           <Ornament className="reveal d1 mb-6" />
 
-          <p className="text-center font-serif italic text-lg reveal d2 mb-8 leading-snug" style={{ color: MUTED }}>
+          <p className="text-center font-serif italic text-lg reveal d2 mb-8 leading-snug" style={{ color: TEXT }}>
             Листайте, чтобы узнать<br />наши пожелания к образу
           </p>
 
-          <DressCodeSlider accentDeep={ACCENT_DEEP} muted={MUTED} ink={INK} />
+          <DressCodeSlider accentDeep={ACCENT_DEEP} muted={TEXT} ink={INK} />
         </div>
       </section>
 
@@ -566,7 +567,7 @@ export default function App() {
 
         <div className="max-w-xl mx-auto relative z-10">
           <SectionTitle eyebrow="Подтверждение участия" title="RSVP" />
-          <p className="text-center text-sm font-light reveal -mt-6 mb-8" style={{ color: MUTED }}>
+          <p className="text-center text-sm font-light reveal -mt-6 mb-8" style={{ color: TEXT }}>
             Пожалуйста, подтвердите участие до 1 июля 2026 года.
           </p>
           <div className="reveal d1">

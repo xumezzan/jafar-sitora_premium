@@ -7,11 +7,11 @@ interface RsvpFormProps {
   onSuccess: (newRsvp: RsvpResponse) => void;
 }
 
-const ACCENT = "#3d5a6e";
-const ACCENT_DEEP = "#2b4050";
-const INK = "#1a2428";
-const MUTED = "#3d4f56";
-const LINE = "rgba(43,64,80,0.22)";
+const ACCENT = "#4F6D87";
+const ACCENT_DEEP = "#243447";
+const INK = "#243447";
+const MUTED = "#3F4750";
+const LINE = "rgba(36,52,71,0.15)";
 
 export default function RsvpForm({ onSuccess }: RsvpFormProps) {
   const [name, setName] = useState("");
