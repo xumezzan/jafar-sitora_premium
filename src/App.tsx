@@ -328,15 +328,25 @@ export default function App() {
                   <div
                     className="p-5 transition-all"
                     style={{
-                      background: isPhoto ? "rgba(123,146,138,0.10)" : "var(--color-bg)",
-                      border: `1px solid ${isPhoto ? "rgba(123,146,138,0.4)" : "var(--color-line)"}`,
+                      background: isPhoto ? "rgba(123,146,138,0.08)" : "var(--color-bg)",
+                      border: isPhoto
+                        ? `1.5px dashed ${ACCENT}`
+                        : "1px solid var(--color-line)",
                     }}
                   >
                     <div className="md:hidden text-base font-serif mb-1 flex items-center gap-1.5" style={{ color: ACCENT_DEEP }}>
                       <Clock className="w-3.5 h-3.5 opacity-60" />
                       <span>{item.time}</span>
                     </div>
-                    <h4 className="text-sm font-medium tracking-wide flex items-center gap-2" style={{ color: INK }}>
+                    <h4
+                      className="text-sm tracking-wide flex items-center gap-2"
+                      style={{
+                        color: isPhoto ? ACCENT_DEEP : INK,
+                        fontWeight: isPhoto ? 600 : 500,
+                        textTransform: isPhoto ? "uppercase" : "none",
+                        letterSpacing: isPhoto ? "0.08em" : undefined,
+                      }}
+                    >
                       {item.icon === "camera" && <Camera className="w-4 h-4 shrink-0" style={{ color: ACCENT }} />}
                       {item.icon === "users" && <Users className="w-4 h-4 shrink-0 opacity-60" />}
                       {item.icon === "heart" && <Heart className="w-4 h-4 shrink-0 opacity-60" />}
@@ -344,7 +354,15 @@ export default function App() {
                       {item.icon === "music" && <Music className="w-4 h-4 shrink-0 opacity-60" />}
                       {item.title}
                     </h4>
-                    <p className="text-sm font-light leading-relaxed mt-1.5" style={{ color: MUTED }}>
+                    <p
+                      className="text-sm leading-relaxed mt-1.5"
+                      style={{
+                        color: isPhoto ? ACCENT_DEEP : MUTED,
+                        fontStyle: isPhoto ? "italic" : "normal",
+                        fontWeight: isPhoto ? 300 : 300,
+                        opacity: isPhoto ? 0.85 : 1,
+                      }}
+                    >
                       {item.description}
                     </p>
                   </div>
