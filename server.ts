@@ -15,39 +15,9 @@ app.use(express.json());
 // Path for storing RSVP responses
 const RSVP_FILE = path.join(process.cwd(), "rsvp_responses.json");
 
-// Default initial RSVP responses for presentation
-const DEFAULT_RSVP = [
-  {
-    id: "1",
-    name: "Александр и Мария",
-    status: "yes",
-    guestsCount: 2,
-    food: "meat",
-    drinks: ["wine_red", "champagne"],
-    wishes: "Поздравляем вас с этим невероятным днем! Желаем, чтобы ваш совместный подъем на вершину жизни был полон ярких рассветов, легких троп и верных спутников. С любовью!",
-    createdAt: new Date(Date.now() - 3600000 * 24).toISOString(),
-  },
-  {
-    id: "2",
-    name: "Екатерина Смирнова",
-    status: "yes",
-    guestsCount: 1,
-    food: "fish",
-    drinks: ["wine_white"],
-    wishes: "Ребята, вы потрясающие! До встречи на вершине! Пусть эта экспедиция длиною в жизнь будет самой счастливой.",
-    createdAt: new Date(Date.now() - 3600000 * 12).toISOString(),
-  },
-  {
-    id: "3",
-    name: "Дмитрий Петров",
-    status: "maybe",
-    guestsCount: 1,
-    food: "vegetarian",
-    drinks: ["whiskey"],
-    wishes: "Очень постараюсь быть! Идея с походом и горами просто огонь, предвкушаю крутой вечер у костра!",
-    createdAt: new Date(Date.now() - 3600000 * 4).toISOString(),
-  }
-];
+// Список RSVP по умолчанию пуст — демо-гости убраны перед рассылкой.
+// Реальные ответы хранятся в Google Sheets (главный источник правды).
+const DEFAULT_RSVP: any[] = [];
 
 // Helper to read RSVP
 async function readRsvp(): Promise<any[]> {
