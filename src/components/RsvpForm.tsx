@@ -1,377 +1,249 @@
 import React, { useState } from "react";
-import { Sparkles, Check, Send, AlertCircle, RefreshCw } from "lucide-react";
-import { EventConceptId, RsvpResponse } from "../types";
+import { Sparkles, Check, RefreshCw, AlertCircle } from "lucide-react";
+import { RsvpResponse } from "../types";
 import { initialEventData } from "../data";
 
 interface RsvpFormProps {
-  concept: EventConceptId;
   onSuccess: (newRsvp: RsvpResponse) => void;
 }
 
-export default function RsvpForm({ concept, onSuccess }: RsvpFormProps) {
-  // Form states
+const ACCENT = "#7b928a";
+const ACCENT_DEEP = "#54665e";
+const INK = "#3c4541";
+const MUTED = "#847f74";
+const LINE = "rgba(84,102,94,0.2)";
+
+export default function RsvpForm({ onSuccess }: RsvpFormProps) {
   const [name, setName] = useState("");
-  const [status, setStatus] = useState<"yes" | "no" | "maybe">("yes");
-  const [guestsCount, setGuestsCount] = useState(1);
-  const [food, setFood] = useState<"meat" | "fish" | "vegetarian">("meat");
-  const [drinks, setDrinks] = useState<string[]>([]);
+  const [status, setStatus] = useState<"yes" | "no">("yes");
   const [wishes, setWishes] = useState("");
 
-  // AI assistant states
   const [aiName, setAiName] = useState("");
   const [aiRelation, setAiRelation] = useState("friend");
   const [aiStyle, setAiStyle] = useState("minimalist");
   const [isGeneratingWish, setIsGeneratingWish] = useState(false);
   const [showAiHelper, setShowAiHelper] = useState(false);
 
-  // Submit states
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [isDone, setIsDone] = useState(false);
 
-  // Toggle drink choices
-  const handleDrinkToggle = (drinkId: string) => {
-    if (drinks.includes(drinkId)) {
-      setDrinks(drinks.filter((d) => d !== drinkId));
-    } else {
-      setDrinks([...drinks, drinkId]);
-    }
-  };
-
-  // Generate Wishes using Gemini API via express backend
   const handleGenerateWishes = async (e: React.MouseEvent) => {
     e.preventDefault();
     setSubmitError("");
     const targetName = name.trim() || aiName.trim() || "Дорогой гость";
-    
     setIsGeneratingWish(true);
     try {
       const response = await fetch("/api/gemini/generate-wishes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: targetName,
-          relation: aiRelation,
-          style: aiStyle,
-        }),
+        body: JSON.stringify({ name: targetName, relation: aiRelation, style: aiStyle }),
       });
-
       const data = await response.json();
       if (response.ok && data.text) {
         setWishes(data.text);
-        if (!name.trim() && aiName.trim()) {
-          setName(aiName.trim());
-        }
+        if (!name.trim() && aiName.trim()) setName(aiName.trim());
       } else {
         throw new Error(data.error || "Не удалось получить поздравление");
       }
-    } catch (err: any) {
-      console.warn("AI wishing failed, fallback applied", err);
-      // Beautiful romantic fallback text
+    } catch {
       setWishes("Желаем, чтобы ваша совместная жизнь была наполнена бесконечным счастьем, доверием и гармонией. Пусть в вашем доме всегда царит нежное тепло любви, взаимопонимание и радость!");
     } finally {
       setIsGeneratingWish(false);
     }
   };
 
-  // Submit RSVP Form to backend with WhatsApp fallback
   const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitError("");
-
     if (!name.trim()) {
       setSubmitError("Пожалуйста, введите ваше имя и фамилию");
-      const nameInput = document.getElementById("guest-name-input");
-      nameInput?.focus();
+      document.getElementById("guest-name-input")?.focus();
       return;
     }
-
     setIsSubmitting(true);
-    
-    // 1. Try sending to the Express Backend
+
     try {
       const response = await fetch("/api/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          status,
-          guestsCount,
-          food,
-          drinks,
-          wishes,
-        }),
+        body: JSON.stringify({ name, status, wishes }),
       });
-
       if (response.ok) {
         const savedEntry = await response.json();
         setIsDone(true);
         onSuccess(savedEntry);
-        
-        setTimeout(() => {
-          setName("");
-          setStatus("yes");
-          setGuestsCount(1);
-          setFood("meat");
-          setDrinks([]);
-          setWishes("");
-          setIsDone(false);
-        }, 5000);
+        setTimeout(resetForm, 5000);
         setIsSubmitting(false);
         return;
       }
-    } catch (err) {
-      console.warn("Backend RSVP endpoint failed or unavailable. Falling back to WhatsApp redirection.", err);
+    } catch {
+      // fallback to WhatsApp
     }
 
-    // 2. Fallback to WhatsApp redirection (Perfect for static hosting like GitHub Pages)
     try {
-      const formattedStatus = status === "yes" ? "Да, с радостью приду!" : status === "maybe" ? "Будет видно" : "Не смогу";
-      const formattedFood = food === "meat" ? "Мясо" : food === "fish" ? "Рыба" : "Вегетарианское";
-      const formattedDrinks = drinks.length > 0 ? drinks.join(", ") : "Без алкоголя";
-      
-      const message = `Привет! Отправляю ответ RSVP на приглашение:
-Имя: ${name}
-Присутствие: ${formattedStatus}
-Количество гостей: ${status !== "no" ? guestsCount : 0}
-Выбор блюда: ${status !== "no" ? formattedFood : "-"}
-Напитки: ${status !== "no" ? formattedDrinks : "-"}
-Пожелания: ${wishes || "Нет"}`;
-
+      const statusLabel = status === "yes" ? "Да, с радостью приду!" : "К сожалению, не смогу";
+      const message = `Здравствуйте! Отправляю ответ RSVP:\nИмя: ${name}\nПрисутствие: ${statusLabel}\nПожелания: ${wishes || "Нет"}`;
       const phone = initialEventData.contacts.organizerPhone.replace(/\D/g, "");
-      const whatsappUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
-      
-      window.open(whatsappUrl, "_blank");
-      
+      window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`, "_blank");
       setIsDone(true);
-      onSuccess({
-        id: Math.random().toString(36).substring(2, 9),
-        name,
-        status,
-        guestsCount,
-        food,
-        drinks,
-        wishes,
-      });
-
-      setTimeout(() => {
-        setName("");
-        setStatus("yes");
-        setGuestsCount(1);
-        setFood("meat");
-        setDrinks([]);
-        setWishes("");
-        setIsDone(false);
-      }, 5000);
-    } catch (err: any) {
+      onSuccess({ id: Math.random().toString(36).substring(2, 9), name, status, guestsCount: 1, food: "meat", drinks: [], wishes });
+      setTimeout(resetForm, 5000);
+    } catch {
       setSubmitError("Не удалось отправить RSVP. Пожалуйста, свяжитесь с организатором напрямую.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Concept-specific styles
-  const getConceptStyles = () => {
-    return {
-      card: "bg-[#FDFDFB] border border-[#1A2E22]/15 text-[#1A2E22]",
-      heading: "font-serif text-3xl font-medium tracking-tight text-[#1A2E22] border-b border-[#1A2E22]/10 pb-3",
-      input: "bg-[#FDFDFB] border border-[#1A2E22]/30 focus:border-[#1A2E22] text-[#1A2E22] rounded-none px-3 py-2 text-base md:text-sm transition-all focus:outline-none placeholder:text-stone-400 focus:ring-1 focus:ring-[#1A2E22]",
-      buttonActive: "bg-[#1A2E22] text-[#FDFDFB] border border-[#1A2E22]",
-      buttonInactive: "bg-transparent text-[#1A2E22] border border-[#1A2E22]/20 hover:border-[#1A2E22]/80",
-      luxurySubmit: "w-full cursor-pointer bg-transparent text-[#1A2E22] border border-[#1A2E22] hover:bg-[#1A2E22] hover:text-[#FDFDFB] rounded-none py-3.5 tracking-widest text-[11px] font-semibold uppercase relative overflow-hidden transition-all duration-500 after:content-[''] after:absolute after:top-0 after:left-[-100%] after:w-full after:h-full after:bg-gradient-to-r after:from-transparent after:via-white/20 after:to-transparent after:transition-all after:duration-1000 hover:after:left-[100%]"
-    };
+  const resetForm = () => {
+    setName(""); setStatus("yes"); setWishes(""); setIsDone(false);
   };
 
-  const style = getConceptStyles();
-
-  const itemBorderRadius = "rounded-none font-serif";
+  const inputStyle: React.CSSProperties = {
+    background: "var(--color-bg)",
+    border: `1px solid ${LINE}`,
+    color: INK,
+    padding: "11px 13px",
+    width: "100%",
+    fontSize: "15px",
+    outline: "none",
+    transition: "border-color 0.3s",
+    fontFamily: "Jost, sans-serif",
+    fontWeight: 300,
+  };
 
   return (
-    <div className={`shadow-xl p-6 md:p-8 relative ${style.card}`}>
-      {/* Top Background Design */}
-      <span className="absolute top-0 right-10 translate-y-[-50%] bg-[#FDFDFB] text-[#8A9A5B] font-serif italic text-xs px-2 select-none tracking-widest">
-        RSVP // ПОДТВЕРЖДЕНИЕ
-      </span>
-
+    <div className="p-6 md:p-8 relative" style={{ background: "var(--color-bg)", border: `1px solid ${LINE}` }}>
       {isDone ? (
         <div id="rsvp-success-block" className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="w-16 h-16 rounded-full flex items-center justify-center mb-6 animate-bounce bg-[#1A2E22] text-[#FDFDFB]">
-            <Check className="w-8 h-8" strokeWidth={3} />
+          <div
+            className="w-16 h-16 rounded-full flex items-center justify-center mb-6 animate-bounce"
+            style={{ background: "rgba(123,146,138,0.15)", border: `1px solid ${ACCENT}` }}
+          >
+            <Check className="w-8 h-8" style={{ color: ACCENT_DEEP }} strokeWidth={2.5} />
           </div>
-          <h4 className="text-2xl font-semibold mb-2 font-serif">
+          <h4 className="text-2xl font-serif italic mb-2" style={{ color: ACCENT_DEEP }}>
             Спасибо за ответ!
           </h4>
-          <p className="text-sm max-w-sm text-stone-500 leading-relaxed">
-            Ваше подтверждение успешно отправлено и сохранено. Мы с нетерпением ждем встречи с вами на нашем свадебном торжестве!
+          <p className="text-sm max-w-sm font-light leading-relaxed" style={{ color: MUTED }}>
+            Ваше подтверждение успешно отправлено. Мы с нетерпением ждём встречи с вами!
           </p>
         </div>
       ) : (
         <form onSubmit={handleSubmitForm} className="space-y-6">
-          <h3 className={style.heading}>
-            Приглашаем вас
-          </h3>
-
           {submitError && (
-            <div className="bg-red-50 text-red-600 text-xs p-3.5 rounded-lg flex items-start gap-2 border border-red-100">
+            <div className="text-xs p-3.5 flex items-start gap-2" style={{ background: "rgba(180,80,80,0.08)", border: "1px solid rgba(180,80,80,0.2)", color: "#a85555" }}>
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
               <span>{submitError}</span>
             </div>
           )}
 
-          {/* Guest Name */}
+          {/* Имя */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[11px] uppercase tracking-wider font-semibold opacity-75">
-              Имя и Фамилия
+            <label className="text-[10px] uppercase tracking-[0.18em] font-light" style={{ color: MUTED }}>
+              Имя и фамилия
             </label>
             <input
               id="guest-name-input"
               type="text"
               placeholder="Алексей Иванов"
               value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-                setAiName(e.target.value);
-              }}
-              className={style.input}
+              onChange={(e) => { setName(e.target.value); setAiName(e.target.value); }}
+              style={inputStyle}
+              onFocus={(e) => (e.target.style.borderColor = ACCENT)}
+              onBlur={(e) => (e.target.style.borderColor = LINE)}
             />
           </div>
 
-          {/* Attendance Status */}
+          {/* Присутствие: только да/нет */}
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] uppercase tracking-wider font-semibold opacity-75">
-              Будете ли вы присутствовать?
+            <label className="text-[10px] uppercase tracking-[0.18em] font-light" style={{ color: MUTED }}>
+              Сможете присутствовать?
             </label>
-            <div className="grid grid-cols-3 gap-2.5">
-              <button
-                id="rsvp-status-yes"
-                type="button"
-                onClick={() => setStatus("yes")}
-                className={`py-3 text-xs font-medium cursor-pointer transition-all ${itemBorderRadius} ${status === "yes" ? style.buttonActive : style.buttonInactive}`}
-              >
-                Да, с радостью!
-              </button>
-              <button
-                id="rsvp-status-maybe"
-                type="button"
-                onClick={() => setStatus("maybe")}
-                className={`py-3 text-xs font-medium cursor-pointer transition-all ${itemBorderRadius} ${status === "maybe" ? style.buttonActive : style.buttonInactive}`}
-              >
-                Будет видно
-              </button>
-              <button
-                id="rsvp-status-no"
-                type="button"
-                onClick={() => setStatus("no")}
-                className={`py-3 text-xs font-medium cursor-pointer transition-all ${itemBorderRadius} ${status === "no" ? style.buttonActive : style.buttonInactive}`}
-              >
-                Не смогу
-              </button>
+            <div className="grid grid-cols-2 gap-2.5">
+              {[
+                { v: "yes" as const, label: "Да, с радостью!" },
+                { v: "no" as const, label: "К сожалению, нет" },
+              ].map((opt) => {
+                const active = status === opt.v;
+                return (
+                  <button
+                    key={opt.v}
+                    type="button"
+                    onClick={() => setStatus(opt.v)}
+                    className="py-3 text-sm font-light cursor-pointer transition-all duration-200"
+                    style={{
+                      border: `1px solid ${active ? ACCENT : LINE}`,
+                      background: active ? "rgba(123,146,138,0.15)" : "transparent",
+                      color: active ? ACCENT_DEEP : MUTED,
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {status !== "no" && (
-            <>
-              {/* Guests Count */}
-              <div className="flex flex-col gap-2">
-                <label className="text-[11px] uppercase tracking-wider font-semibold opacity-75">
-                  Количество гостей в вашей компании
-                </label>
-                <div className="grid grid-cols-4 gap-2">
-                  {[1, 2, 3, 4].map((num) => (
-                    <button
-                      key={num}
-                      type="button"
-                      onClick={() => setGuestsCount(num)}
-                      className={`py-2 text-xs font-medium cursor-pointer transition-all ${itemBorderRadius} ${guestsCount === num ? style.buttonActive : style.buttonInactive}`}
-                    >
-                      {num === 1 ? "1 (Я)" : num}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
-
-          {/* Wishes & AI Generation */}
+          {/* Пожелания + ИИ */}
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between mb-1">
-              <label className="text-[11px] uppercase tracking-wider font-semibold opacity-75">
-                Ваши пожелания {status === "no" ? "молодоженам" : "и комментарии"}
+              <label className="text-[10px] uppercase tracking-[0.18em] font-light" style={{ color: MUTED }}>
+                Пожелания молодожёнам
               </label>
               <button
                 type="button"
                 onClick={() => setShowAiHelper(!showAiHelper)}
-                className="text-[11px] flex items-center gap-1 cursor-pointer select-none font-semibold text-[#8A9A5B] hover:text-[#1A2E22]"
+                className="text-[10px] flex items-center gap-1 cursor-pointer"
+                style={{ color: ACCENT }}
               >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>ИИ Помощник ✨</span>
+                <Sparkles className="w-3 h-3" />
+                <span>ИИ-помощник</span>
               </button>
             </div>
 
-            {/* AI Customization Panel */}
             {showAiHelper && (
-              <div className="p-4 mb-3 border text-xs space-y-3.5 transition-all bg-stone-50 border-stone-200 rounded-none">
-                <div className="text-[11px] font-medium opacity-80 leading-relaxed">
-                  Будем рады помочь составить красивое и теплое поздравление! Наш ИИ сгенерирует текст:
+              <div className="p-4 mb-3 space-y-3 text-xs" style={{ background: "var(--color-bg-alt)", border: `1px solid ${LINE}` }}>
+                <div className="text-[11px] font-light leading-relaxed" style={{ color: MUTED }}>
+                  Поможем составить тёплое поздравление для молодожёнов:
                 </div>
-                
                 <div className="grid grid-cols-2 gap-2.5">
                   <div className="flex flex-col gap-1">
-                    <span className="text-[9px] uppercase font-bold opacity-60">Моя связь с парой</span>
-                    <select
-                      value={aiRelation}
-                      onChange={(e) => setAiRelation(e.target.value)}
-                      className="border border-stone-200 rounded p-1.5 text-xs outline-none bg-white text-stone-800"
-                    >
+                    <span className="text-[9px] uppercase font-light tracking-wide" style={{ color: MUTED }}>Связь с парой</span>
+                    <select value={aiRelation} onChange={(e) => setAiRelation(e.target.value)} style={{ ...inputStyle, padding: "7px 9px", fontSize: "13px" }}>
                       <option value="friend">Друг / подруга</option>
-                      <option value="family">Родственник / семья</option>
+                      <option value="family">Родственник</option>
                       <option value="colleague">Коллега</option>
                     </select>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <span className="text-[9px] uppercase font-bold opacity-60">Стиль пожеланий</span>
-                    <select
-                      value={aiStyle}
-                      onChange={(e) => setAiStyle(e.target.value)}
-                      className="border border-stone-200 rounded p-1.5 text-xs outline-none bg-white text-stone-800"
-                    >
+                    <span className="text-[9px] uppercase font-light tracking-wide" style={{ color: MUTED }}>Стиль</span>
+                    <select value={aiStyle} onChange={(e) => setAiStyle(e.target.value)} style={{ ...inputStyle, padding: "7px 9px", fontSize: "13px" }}>
                       <option value="minimalist">Изящный краткий</option>
-                      <option value="humorous">С легким юмором 😄</option>
-                      <option value="adventure">Теплый и душевный 💕</option>
+                      <option value="humorous">С лёгким юмором</option>
+                      <option value="adventure">Тёплый душевный</option>
                     </select>
                   </div>
                 </div>
-
                 {!name.trim() && (
                   <div className="flex flex-col gap-1">
-                    <span className="text-[9px] uppercase font-bold opacity-60">Ваше имя</span>
-                    <input
-                      type="text"
-                      placeholder="Чтобы вписать в открытку"
-                      value={aiName}
-                      onChange={(e) => setAiName(e.target.value)}
-                      className="border border-stone-200 rounded p-1.5 text-xs outline-none bg-white text-stone-800"
-                    />
+                    <span className="text-[9px] uppercase font-light tracking-wide" style={{ color: MUTED }}>Ваше имя</span>
+                    <input type="text" placeholder="Чтобы вписать в открытку" value={aiName} onChange={(e) => setAiName(e.target.value)} style={{ ...inputStyle, padding: "7px 9px", fontSize: "13px" }} />
                   </div>
                 )}
-
                 <button
                   id="rsvp-ai-generate-btn"
                   type="button"
                   disabled={isGeneratingWish}
                   onClick={handleGenerateWishes}
-                  className="w-full py-2 cursor-pointer text-xs font-semibold flex items-center justify-center gap-1.5 bg-[#1A2E22] text-[#FDFDFB] rounded-none"
+                  className="w-full py-2.5 cursor-pointer text-xs font-light tracking-wide flex items-center justify-center gap-1.5 transition-all"
+                  style={{ background: "rgba(123,146,138,0.14)", border: `1px solid ${ACCENT}`, color: ACCENT_DEEP }}
                 >
                   {isGeneratingWish ? (
-                    <>
-                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                      <span>Слова подбираются...</span>
-                    </>
+                    <><RefreshCw className="w-3.5 h-3.5 animate-spin" /><span>Подбираю слова...</span></>
                   ) : (
-                    <>
-                      <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-                      <span>Составить поздравление</span>
-                    </>
+                    <><Sparkles className="w-3.5 h-3.5" /><span>Составить поздравление</span></>
                   )}
                 </button>
               </div>
@@ -379,29 +251,32 @@ export default function RsvpForm({ concept, onSuccess }: RsvpFormProps) {
 
             <textarea
               rows={4}
-              placeholder="Мы придем с отличным настроением! Безумно рады за вас!"
+              placeholder="Мы придём с отличным настроением!"
               value={wishes}
               onChange={(e) => setWishes(e.target.value)}
-              className={`${style.input} resize-y w-full leading-relaxed min-h-[90px]`}
+              style={{ ...inputStyle, resize: "vertical", minHeight: "90px", lineHeight: "1.6" }}
+              onFocus={(e) => (e.target.style.borderColor = ACCENT)}
+              onBlur={(e) => (e.target.style.borderColor = LINE)}
             />
           </div>
 
-          {/* Submit Button */}
+          {/* Кнопка отправки */}
           <button
             id="rsvp-submit-button"
             type="submit"
             disabled={isSubmitting}
-            className={style.luxurySubmit}
+            className="w-full cursor-pointer py-3.5 tracking-[0.18em] text-[11px] font-light uppercase transition-all duration-300"
+            style={{ border: `1px solid ${ACCENT_DEEP}`, color: ACCENT_DEEP, background: "transparent" }}
+            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "rgba(123,146,138,0.14)")}
+            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}
           >
             {isSubmitting ? (
-              <span className="flex items-center gap-2 font-serif text-[11px] tracking-widest uppercase text-center justify-center w-full">
+              <span className="flex items-center gap-2 justify-center">
                 <RefreshCw className="w-4 h-4 animate-spin" />
-                <span>Отправляем ответ...</span>
+                <span>Отправляем...</span>
               </span>
             ) : (
-              <span className="flex items-center justify-center gap-2">
-                Confirm Attendance // Подтвердить участие
-              </span>
+              <span>Подтвердить участие</span>
             )}
           </button>
         </form>

@@ -2,13 +2,17 @@
 
 @theme {
   --font-serif: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Montserrat", system-ui, sans-serif;
-  --font-pinyon: "Pinyon Script", cursive;
-  --font-tenor: "Tenor Sans", sans-serif;
-  --font-syne: "Syne", sans-serif;
-  --font-mono: "Fira Code", monospace;
-  --font-cinzel: "Cinzel", Georgia, serif;
-  
+  --font-sans: "Jost", system-ui, sans-serif;
+
+  /* Warm ivory base + muted dusty blue-green accent (tied to the couple photo) */
+  --color-bg: #f3f0e9;       /* warm ivory */
+  --color-bg-alt: #ebe6db;   /* soft warm sand */
+  --color-ink: #3c4541;      /* deep earthy slate-green, low contrast */
+  --color-muted: #847f74;    /* warm dusty taupe-green */
+  --color-accent: #7b928a;   /* mixed dusty blue-green */
+  --color-accent-deep: #54665e;
+  --color-line: rgba(84, 102, 94, 0.2);
+
   /* Soundbars keyframes for Audio Player */
   @keyframes bar-1 {
     0%, 100% { transform: scaleY(0.3); }
@@ -22,9 +26,33 @@
     0%, 100% { transform: scaleY(0.5); }
     50% { transform: scaleY(1.2); }
   }
-  
+
+  @keyframes reveal-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
   --animate-bar-1: bar-1 0.8s ease-in-out infinite;
   --animate-bar-2: bar-2 0.7s ease-in-out infinite;
   --animate-bar-3: bar-3 0.9s ease-in-out infinite;
-  --animate-spin-slow: spin 12s linear infinite;
+  --animate-spin-slow: spin 14s linear infinite;
+}
+
+/* Scroll-triggered reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Thin centered divider in accent */
+.divider {
+  width: 56px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #7b928a, transparent);
+  margin: 0 auto;
 }
