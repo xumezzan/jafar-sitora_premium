@@ -76,12 +76,18 @@ body {
   animation: letter-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Плавный «вход» секции при загрузке hero */
+/* Плавный «вход» секции при загрузке hero.
+   transform:translateZ(0) промоутит блок в отдельный GPU-слой —
+   Telegram WebView не пересчитывает его layout при скролле/тулбаре. */
 @keyframes soft-in {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
-.soft-in { animation: soft-in 0.9s ease both; }
+.soft-in {
+  animation: soft-in 0.8s ease both;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
 
 /* float-soft disabled — continuous transform loops cost GPU on mobile WebViews */
 .float-soft { }
@@ -156,15 +162,18 @@ input::placeholder, textarea::placeholder { color: #8B9198; opacity: 1; }
   right: 0;
   top: max(4%, env(safe-area-inset-top, 0px));
   z-index: 10;
+  transform: translateZ(0);
 }
 
-/* Нижняя безопасная зона hero: имена + дата под руками пары */
+/* Нижняя безопасная зона hero: имена + дата под руками пары.
+   bottom в % (не svh) — фиксируется от --app-height, не дёргается в Telegram. */
 .safe-bottom {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 1svh);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 2%);
   z-index: 10;
+  transform: translateZ(0);
 }
 
 /* Заголовок финального экрана — в верхней трети (небо) */
@@ -174,6 +183,7 @@ input::placeholder, textarea::placeholder { color: #8B9198; opacity: 1; }
   right: 0;
   top: max(5%, env(safe-area-inset-top, 0px));
   z-index: 10;
+  transform: translateZ(0);
 }
 
 /* Адаптация под низкие экраны (iPhone SE и т.п.): сжимаем стек имён+даты,

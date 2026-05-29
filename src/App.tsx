@@ -54,6 +54,18 @@ export default function App() {
     refreshRsvps();
   }, []);
 
+  // Фиксируем высоту hero/финала ОДИН раз (и только на смену ориентации).
+  // В Telegram WebView 100svh/100vh дёргается при появлении/скрытии тулбара —
+  // поэтому пишем абсолютную высоту в CSS-переменную и НЕ трогаем её на скролл.
+  useEffect(() => {
+    const setH = () => {
+      document.documentElement.style.setProperty("--app-height", `${window.innerHeight}px`);
+    };
+    setH();
+    window.addEventListener("orientationchange", () => setTimeout(setH, 250));
+    return () => window.removeEventListener("orientationchange", setH);
+  }, []);
+
   // Обратный отсчёт
   useEffect(() => {
     const weddingDate = new Date(`${eventData.date}T18:00:00`).getTime();
@@ -220,14 +232,14 @@ export default function App() {
           Face-First: лица пары (28–62% высоты фото) остаются открытыми.
           «Wedding Day» — верхняя безопасная зона (небо над головами),
           имена + дата — нижняя безопасная зона (под сцепленными руками). */}
-      <section id="welcome-screen" className="relative overflow-hidden" style={{ height: "100svh", minHeight: 600 }}>
+      <section id="welcome-screen" className="relative overflow-hidden" style={{ height: "var(--app-height, 100svh)", minHeight: "var(--app-height, 100svh)" }}>
         <div className="absolute inset-0">
           <img
             src={eventData.heroImage}
             alt="Джаъфар и Ситора"
             referrerPolicy="no-referrer"
             fetchPriority="high"
-            decoding="sync"
+            decoding="async"
             className="w-full h-full object-cover"
             style={{ objectPosition: "50% 20%" }}
           />
@@ -249,7 +261,6 @@ export default function App() {
         {/* Имена + дата — нижняя безопасная зона, лица полностью открыты */}
         <div
           className="safe-bottom hero-stack text-center px-6 soft-in flex flex-col items-center gap-1.5"
-          style={{ animationDelay: "0.2s" }}
         >
           <h1 className="font-serif text-white leading-[0.95] photo-text" style={{ fontWeight: 600 }}>
             <span className="hero-name block text-5xl md:text-7xl">{eventData.groomName}</span>
@@ -589,13 +600,12 @@ export default function App() {
       {/* ── ФИНАЛ ──
           Face-First: лица пары (28–52% высоты) полностью открыты.
           Заголовок + подпись — только в верхней трети (небо, 0–26%). */}
-      <section id="final-screen" className="relative overflow-hidden text-center" style={{ height: "100svh", minHeight: 600 }}>
+      <section id="final-screen" className="relative overflow-hidden text-center" style={{ height: "var(--app-height, 100svh)", minHeight: "var(--app-height, 100svh)" }}>
         <div className="absolute inset-0">
           <img
             src="/photo4.jpg"
             alt="Джаъфар и Ситора"
             referrerPolicy="no-referrer"
-            loading="lazy"
             decoding="async"
             className="w-full h-full object-cover"
             style={{ objectPosition: "50% 42%" }}
@@ -604,8 +614,9 @@ export default function App() {
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(30,40,48,0.82) 0%, rgba(30,40,48,0.55) 20%, rgba(30,40,48,0.15) 30%, transparent 38%, transparent 90%, rgba(30,40,48,0.4) 100%)" }} />
         </div>
 
-        {/* Текст в верхней трети (небо) — компактный блок над головами */}
-        <div className="safe-final-top final-stack px-6 text-center reveal reveal-blur flex flex-col items-center gap-3">
+        {/* Текст в верхней трети (небо) — компактный блок над головами.
+            soft-in (только opacity, без translateY) — чтобы не было «прыжка» в Telegram WebView */}
+        <div className="safe-final-top final-stack px-6 text-center soft-in flex flex-col items-center gap-3">
           <h2 className="final-title font-serif text-5xl md:text-6xl text-white leading-tight photo-text" style={{ fontWeight: 600 }}>
             До скорой
             <br />
