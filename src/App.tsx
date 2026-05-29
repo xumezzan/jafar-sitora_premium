@@ -234,40 +234,35 @@ export default function App() {
           />
         </div>
 
+        {/* Эйбрау сверху */}
         <div className="absolute top-20 left-0 right-0 text-center z-10 soft-in">
           <span className="text-[11px] tracking-[0.45em] uppercase font-light text-white/85">Wedding Day</span>
         </div>
 
-        {/* Имена + орнамент + большая дата */}
-        <div className="relative z-10 text-center px-6 soft-in" style={{ animationDelay: "0.2s" }}>
-          <h1 className="font-serif text-white leading-[0.92] drop-shadow-md" style={{ fontWeight: 500 }}>
-            <span className="block text-6xl md:text-8xl">{eventData.groomName}</span>
-            <span className="block text-3xl md:text-4xl my-3 opacity-80">&amp;</span>
-            <span className="block text-6xl md:text-8xl">{eventData.brideName}</span>
+        {/* Имена + орнамент + дата — внизу, лица свободны */}
+        <div className="absolute bottom-16 left-0 right-0 z-10 text-center px-6 soft-in flex flex-col items-center gap-4" style={{ animationDelay: "0.2s" }}>
+          <h1 className="font-serif text-white leading-[0.95] drop-shadow-md" style={{ fontWeight: 500 }}>
+            <span className="block text-5xl md:text-7xl">{eventData.groomName}</span>
+            <span className="block text-2xl md:text-3xl my-2 opacity-75">&amp;</span>
+            <span className="block text-5xl md:text-7xl">{eventData.brideName}</span>
           </h1>
 
-          <div className="my-8 flex items-center justify-center gap-3 text-white/80">
-            <span className="h-px w-16" style={{ background: "rgba(255,255,255,0.5)" }} />
+          <div className="flex items-center justify-center gap-3 text-white/70">
+            <span className="h-px w-12" style={{ background: "rgba(255,255,255,0.5)" }} />
             <Sprig color="#ffffff" />
-            <span className="h-px w-16" style={{ background: "rgba(255,255,255,0.5)" }} />
+            <span className="h-px w-12" style={{ background: "rgba(255,255,255,0.5)" }} />
           </div>
 
           <BigDate light />
-
-          <p className="mt-10 text-[11px] md:text-xs uppercase tracking-[0.3em] font-light text-white/80 leading-relaxed">
-            Мы приглашаем вас разделить
-            <br />
-            с нами этот особенный день
-          </p>
         </div>
 
+        {/* Стрелка вниз */}
         <button
           onClick={() => scrollTo("about-section")}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 w-11 h-16 rounded-full border flex items-end justify-center pb-3 animate-bounce cursor-pointer"
-          style={{ borderColor: "rgba(255,255,255,0.5)" }}
+          className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 cursor-pointer animate-bounce"
           aria-label="Листать вниз"
         >
-          <ChevronDown className="w-4 h-4 text-white/90" />
+          <ChevronDown className="w-5 h-5 text-white/70" />
         </button>
       </section>
 
