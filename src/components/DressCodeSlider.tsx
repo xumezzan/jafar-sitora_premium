@@ -75,7 +75,7 @@ export default function DressCodeSlider({
       {/* Карточка */}
       <div
         className="relative rounded-2xl px-8 py-10 text-center"
-        style={{ background: "rgba(255,255,255,0.95)", border: "1px solid var(--color-line)", boxShadow: "0 18px 40px -28px rgba(36,52,71,0.2)" }}
+        style={{ background: "rgba(255,255,255,0.72)", backdropFilter: "blur(3px)", border: "1px solid var(--color-line)", boxShadow: "0 18px 40px -28px rgba(36,52,71,0.15)" }}
       >
         {/* Кнопка назад */}
         <button

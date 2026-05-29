@@ -115,7 +115,7 @@ export default function RsvpForm({ onSuccess }: RsvpFormProps) {
   };
 
   return (
-    <div className="p-6 md:p-9 relative rounded-2xl" style={{ background: "var(--color-card)", border: `1px solid ${LINE}`, boxShadow: "0 24px 50px -34px rgba(46,59,66,0.45)" }}>
+    <div className="p-6 md:p-9 relative rounded-2xl" style={{ background: "rgba(255,255,255,0.72)", backdropFilter: "blur(3px)", border: `1px solid ${LINE}`, boxShadow: "0 24px 50px -34px rgba(36,52,71,0.2)" }}>
       {isDone ? (
         <div id="rsvp-success-block" className="flex flex-col items-center justify-center py-12 text-center">
           <div
