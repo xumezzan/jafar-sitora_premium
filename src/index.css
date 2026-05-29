@@ -79,10 +79,10 @@ body {
 
 /* Плавный «вход» секции при загрузке hero */
 @keyframes soft-in {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
-.soft-in { animation: soft-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.soft-in { animation: soft-in 0.9s ease both; }
 
 /* Лёгкое «дыхание» декоративных веточек */
 @keyframes float-soft {
