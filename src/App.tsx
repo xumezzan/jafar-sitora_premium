@@ -97,7 +97,7 @@ export default function App() {
       vv.removeEventListener("scroll", onChange);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [showFloatNav]);
+  }, []);
 
   // Обратный отсчёт
   useEffect(() => {
@@ -672,34 +672,44 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── Плавающая навигация (моб.) ── */}
-      {showFloatNav && (
-        <div
-          id="mobile-float-navigation-dock"
-          className="fixed left-1/2 -translate-x-1/2 z-30 flex items-center justify-around gap-1 p-1.5 rounded-full shadow-xl max-w-[95vw] md:hidden"
-          style={{ bottom: "var(--nav-bottom, 16px)", background: "rgba(248,245,239,0.98)", border: "1px solid var(--color-line)" }}
-        >
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isCurrent = activeSection === item.id;
-            return (
-              <button
-                key={item.id}
-                id={`float-nav-btn-${item.id}`}
-                onClick={() => scrollTo(item.id)}
-                className="flex flex-col items-center justify-center gap-1 py-1.5 px-2.5 min-w-[52px] rounded-full transition-all duration-300 cursor-pointer"
-                style={{
-                  color: isCurrent ? "#fff" : MUTED,
-                  background: isCurrent ? ACCENT : "transparent",
-                }}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                <span className="font-normal tracking-tight text-[8px]">{item.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      )}
+      {/* ── Плавающая навигация (моб.) ──
+          Рендерим всегда, переключаем видимость через opacity/translate —
+          панель плавно проявляется, а не вставляется резко в DOM. */}
+      <div
+        id="mobile-float-navigation-dock"
+        className="fixed left-1/2 -translate-x-1/2 z-30 flex items-center justify-around gap-1 p-1.5 rounded-full shadow-xl max-w-[95vw] md:hidden"
+        style={{
+          bottom: "var(--nav-bottom, 16px)",
+          background: "rgba(248,245,239,0.98)",
+          border: "1px solid var(--color-line)",
+          opacity: showFloatNav ? 1 : 0,
+          transform: showFloatNav
+            ? "translateX(-50%) translateY(0)"
+            : "translateX(-50%) translateY(16px)",
+          pointerEvents: showFloatNav ? "auto" : "none",
+          transition: "opacity 0.45s ease, transform 0.45s ease",
+        }}
+      >
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const isCurrent = activeSection === item.id;
+          return (
+            <button
+              key={item.id}
+              id={`float-nav-btn-${item.id}`}
+              onClick={() => scrollTo(item.id)}
+              className="flex flex-col items-center justify-center gap-1 py-1.5 px-2.5 min-w-[52px] rounded-full transition-all duration-300 cursor-pointer"
+              style={{
+                color: isCurrent ? "#fff" : MUTED,
+                background: isCurrent ? ACCENT : "transparent",
+              }}
+            >
+              <Icon className="w-3.5 h-3.5" />
+              <span className="font-normal tracking-tight text-[8px]">{item.label}</span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
