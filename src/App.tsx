@@ -241,12 +241,12 @@ export default function App() {
 
         {/* Эйбрау сверху — над головами (safe-top) */}
         <div className="safe-top text-center soft-in">
-          <span className="text-[11px] tracking-[0.45em] uppercase font-light text-white/90 photo-text">Wedding Day</span>
+          <span className="text-[11px] tracking-[0.28em] uppercase font-light text-white/90 photo-text">Wedding Day</span>
         </div>
 
         {/* Имена + дата — нижняя безопасная зона, лица полностью открыты */}
         <div
-          className="safe-bottom hero-stack text-center px-6 soft-in flex flex-col items-center gap-3"
+          className="safe-bottom hero-stack text-center px-6 soft-in flex flex-col items-center gap-1.5"
           style={{ animationDelay: "0.2s" }}
         >
           <h1 className="font-serif text-white leading-[0.95] photo-text" style={{ fontWeight: 500 }}>
@@ -593,10 +593,10 @@ export default function App() {
             alt="Джаъфар и Ситора"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
-            style={{ objectPosition: "50% 30%" }}
+            style={{ objectPosition: "50% 42%" }}
           />
           {/* Затемнение в верхней трети (под текст) — лица в чистой зоне */}
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(30,40,48,0.78) 0%, rgba(30,40,48,0.5) 18%, rgba(30,40,48,0.12) 27%, transparent 40%, transparent 90%, rgba(30,40,48,0.4) 100%)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(30,40,48,0.82) 0%, rgba(30,40,48,0.55) 20%, rgba(30,40,48,0.15) 30%, transparent 38%, transparent 90%, rgba(30,40,48,0.4) 100%)" }} />
         </div>
 
         {/* Текст в верхней трети (небо) — компактный блок над головами */}

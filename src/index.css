@@ -159,7 +159,7 @@ input::placeholder, textarea::placeholder { color: #8B9198; opacity: 1; }
   position: absolute;
   left: 0;
   right: 0;
-  top: max(7%, env(safe-area-inset-top, 0px));
+  top: max(4%, env(safe-area-inset-top, 0px));
   z-index: 10;
 }
 
@@ -168,7 +168,7 @@ input::placeholder, textarea::placeholder { color: #8B9198; opacity: 1; }
   position: absolute;
   left: 0;
   right: 0;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 3svh);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 1svh);
   z-index: 10;
 }
 
@@ -177,7 +177,7 @@ input::placeholder, textarea::placeholder { color: #8B9198; opacity: 1; }
   position: absolute;
   left: 0;
   right: 0;
-  top: max(9%, env(safe-area-inset-top, 0px));
+  top: max(5%, env(safe-area-inset-top, 0px));
   z-index: 10;
 }
 
