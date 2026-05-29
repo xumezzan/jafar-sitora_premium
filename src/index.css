@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif: "Crimson Text", Georgia, serif;
-  --font-sans: "Raleway", system-ui, sans-serif;
-  --font-accent: "Pacifico", cursive;
+  --font-serif: "Inter", system-ui, sans-serif;
+  --font-sans: "Poppins", system-ui, sans-serif;
+  --font-accent: "Great Vibes", cursive;
 
   /* Warm ivory base + muted dusty blue-green accent (tied to the couple photo) */
   --color-bg: #f3f0e9;       /* warm ivory */

@@ -171,7 +171,7 @@ export default function App() {
 
         {/* Bottom: names + date + scroll hint */}
         <div className="absolute bottom-10 left-0 right-0 z-10 flex flex-col items-center gap-5 px-6">
-          <h1 className="text-white text-center leading-tight drop-shadow-sm" style={{ fontFamily: "'Pacifico', cursive" }}>
+          <h1 className="text-white text-center leading-tight drop-shadow-sm" style={{ fontFamily: "'Great Vibes', cursive" }}>
             <span className="block text-4xl md:text-6xl">{eventData.groomName}</span>
             <span className="block text-base md:text-lg my-2 font-light tracking-[0.3em] uppercase text-white/75" style={{ fontFamily: "'Raleway', sans-serif" }}>
               &amp;
@@ -405,7 +405,7 @@ export default function App() {
         </div>
 
         <div className="relative z-10 space-y-7 max-w-lg">
-          <h2 className="text-4xl md:text-5xl text-white leading-tight" style={{ fontFamily: "'Pacifico', cursive" }}>
+          <h2 className="text-4xl md:text-5xl text-white leading-tight" style={{ fontFamily: "'Great Vibes', cursive" }}>
             До скорой <br />встречи!
           </h2>
           <div className="divider" style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.7), transparent)" }} />
