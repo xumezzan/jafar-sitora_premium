@@ -349,7 +349,7 @@ export default function App() {
                 referrerPolicy="no-referrer"
                 loading="lazy"
                 decoding="async"
-                className="w-full h-[520px] object-cover"
+                className="w-full h-[650px] object-cover"
                 style={{ objectPosition: "50% 30%" }}
               />
               <div className="py-7 px-4 text-center" style={{ background: "rgba(237,236,234,0.85)" }}>
