@@ -350,7 +350,7 @@ export default function App() {
                 loading="lazy"
                 decoding="async"
                 className="w-full h-[420px] object-cover"
-                style={{ objectPosition: "65% 25%" }}
+                style={{ objectPosition: "50% 30%" }}
               />
               <div className="py-7 px-4 text-center" style={{ background: "rgba(237,236,234,0.85)" }}>
                 <span className="block text-[10px] uppercase tracking-[0.3em] mb-2" style={{ color: ACCENT }}>
