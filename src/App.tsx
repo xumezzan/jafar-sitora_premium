@@ -499,7 +499,7 @@ export default function App() {
               style={{ border: 0, display: "block", filter: "grayscale(20%) contrast(0.96) brightness(1.02)" }}
               loading="lazy"
               allowFullScreen
-              src={`https://yandex.ru/map-widget/v1/?ll=${eventData.coordinates.lng}%2C${eventData.coordinates.lat}&z=19&pt=${eventData.coordinates.lng}%2C${eventData.coordinates.lat},pm2rdm`}
+              src="https://yandex.ru/map-widget/v1/?text=%D0%A0%D0%B5%D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BD%20Teia%20%D0%A2%D0%B0%D1%88%D0%BA%D0%B5%D0%BD%D1%82%20%D0%97%D1%83%D0%BB%D1%8C%D1%84%D0%B8%D1%8F%D1%85%D0%B0%D0%BD%D1%83%D0%BC%2073&z=18"
             />
           </div>
         </div>
