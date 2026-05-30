@@ -499,7 +499,7 @@ export default function App() {
               style={{ border: 0, display: "block", filter: "grayscale(20%) contrast(0.96) brightness(1.02)" }}
               loading="lazy"
               allowFullScreen
-              src={`https://yandex.ru/map-widget/v1/?ll=${eventData.coordinates.lng}%2C${eventData.coordinates.lat}&z=17&pt=${eventData.coordinates.lng}%2C${eventData.coordinates.lat},pm2rdm`}
+              src={`https://yandex.ru/map-widget/v1/?ll=${eventData.coordinates.lng}%2C${eventData.coordinates.lat}&z=19&pt=${eventData.coordinates.lng}%2C${eventData.coordinates.lat},pm2rdm`}
             />
           </div>
         </div>
