@@ -124,8 +124,8 @@ input::placeholder, textarea::placeholder { color: #8B9198; opacity: 1; }
 
 /* Арочная маска для фото (скруглённый верх) */
 .arch-top {
-  border-top-left-radius: 50% 22%;
-  border-top-right-radius: 50% 22%;
+  border-top-left-radius: 50% 12%;
+  border-top-right-radius: 50% 12%;
   overflow: hidden;
 }
 
